@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.Domain", "EstateAgency.Domain\EstateAgency.Domain.csproj", "{8A48C6FE-5077-46E1-A44A-7EA9AF0C072E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.Test", "EstateAgency.Test\EstateAgency.Test.csproj", "{DA776BBE-A2B0-4822-B0D6-066690003824}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8A48C6FE-5077-46E1-A44A-7EA9AF0C072E} = {8A48C6FE-5077-46E1-A44A-7EA9AF0C072E}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
