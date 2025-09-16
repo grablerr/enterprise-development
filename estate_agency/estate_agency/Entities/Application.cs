@@ -1,6 +1,6 @@
 ﻿namespace EstateAgency.Domain.Entities;
 
-internal class Application
+public class Application
 {
     public int Id { get; set; }
     public required int AgentId { get; set; }

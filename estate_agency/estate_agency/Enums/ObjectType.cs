@@ -1,6 +1,6 @@
 ﻿namespace EstateAgency.Domain.Enums;
 
-internal enum ObjectType
+public enum ObjectType
 {
     Apartment,      
     House,          

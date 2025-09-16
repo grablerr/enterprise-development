@@ -1,6 +1,6 @@
 ﻿namespace EstateAgency.Domain.Enums;
 
-internal enum ObjectPurpose
+public enum ObjectPurpose
 {
     Residential,
     Commercial,

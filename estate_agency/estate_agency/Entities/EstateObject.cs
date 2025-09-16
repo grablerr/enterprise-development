@@ -2,7 +2,7 @@
 
 namespace EstateAgency.Domain.Entities;
 
-internal class EstateObject
+public class EstateObject
 {
     public required int Id { get; set; } 
     public ObjectType Type { get; set; }

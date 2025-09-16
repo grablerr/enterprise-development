@@ -1,6 +1,6 @@
 ﻿namespace EstateAgency.Domain.Enums;
 
-internal enum ApplicationType
+public enum ApplicationType
 {
     Buy,
     Sell
