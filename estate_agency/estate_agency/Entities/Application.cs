@@ -1,4 +1,6 @@
-﻿namespace EstateAgency.Domain.Entities;
+﻿using EstateAgency.Domain.Enums;
+
+namespace EstateAgency.Domain.Entities;
 
 public class Application
 {
@@ -8,6 +10,6 @@ public class Application
     public required int ObjectId { get; set; }
     public EstateObject? ObjectInfo { get; set; }
     public required decimal TransactionAmount { get; set; }
-    public required Application Type { get; set; }
+    public required ApplicationType Type { get; set; }
     public DateTime? Date { get; set; }
 }

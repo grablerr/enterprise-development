@@ -7,7 +7,7 @@ public class EstateObject
     public required int Id { get; set; } 
     public ObjectType Type { get; set; }
     public ObjectPurpose Purpose { get; set; }
-    public required int CadastralNumber { get; set; }
+    public required string CadastralNumber { get; set; }
     public required string Address { get; set; }
     public int FloorNumber { get; set; }
     public int Floors {  get; set; }
