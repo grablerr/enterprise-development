@@ -3,5 +3,7 @@
 internal enum ObjectPurpose
 {
     Residential,
-    Commercial
+    Commercial,
+    Industrial,
+    Agricultural
 }

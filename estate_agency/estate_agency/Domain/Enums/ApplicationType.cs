@@ -1,6 +1,6 @@
 ﻿namespace EstateAgency.Domain.Enums;
 
-internal enum RequestType
+internal enum ApplicationType
 {
     Buy,
     Sell
