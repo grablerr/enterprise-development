@@ -1,8 +1,8 @@
 ﻿using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Enums;
 
-namespace EstateAgency.Test;
-internal class FixtureDataClass
+namespace EstateAgency.Test.Data;
+public class FixtureDataClass
 {
     public List<EstateObject> EstateObjects =>
     [
@@ -207,7 +207,7 @@ internal class FixtureDataClass
             AgentId = 2,
             AgentInfo = Counterparties[1],
             ObjectId = 2,
-            ObjectInfo = EstateObjects[1],
+            ObjectInfo = EstateObjects[1], //house
             TransactionAmount = 12_500_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 5, 15)
@@ -281,8 +281,8 @@ internal class FixtureDataClass
         new Application
         {
             Id = 9,
-            AgentId = 4,
-            AgentInfo = Counterparties[3],
+            AgentId = 1,
+            AgentInfo = Counterparties[0],
             ObjectId = 9,
             ObjectInfo = EstateObjects[8],
             TransactionAmount = 10_100_000m,
@@ -292,8 +292,8 @@ internal class FixtureDataClass
         new Application
         {
             Id = 10,
-            AgentId = 5,
-            AgentInfo = Counterparties[4],
+            AgentId = 2,
+            AgentInfo = Counterparties[1],
             ObjectId = 10,
             ObjectInfo = EstateObjects[9],
             TransactionAmount = 7_900_000m,
