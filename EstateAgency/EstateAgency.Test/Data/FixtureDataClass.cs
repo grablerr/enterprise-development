@@ -2,8 +2,17 @@
 using EstateAgency.Domain.Enums;
 
 namespace EstateAgency.Test.Data;
+
+/// <summary>
+/// Provides comprehensive test data fixture for Estate Agency domain entities.
+/// Contains pre-populated collections of real estate objects, counterparties, and applications
+/// for use in unit testing and development scenarios.
+/// </summary>
 public class FixtureDataClass
 {
+    /// <summary>
+    /// Collection of 10 diverse real estate objects representing various property types and purposes.
+    /// </summary>
     public List<EstateObject> EstateObjects =>
     [
         new EstateObject
@@ -148,7 +157,10 @@ public class FixtureDataClass
             IsEncumbrance = true
         }
     ];
-
+    /// <summary>
+    /// Collection of 5 counterparties with complete identification and contact information.
+    /// Represents individual clients participating in real estate transactions.
+    /// </summary>
     public List<Counterparty> Counterparties =>
     [
         new Counterparty
@@ -187,7 +199,10 @@ public class FixtureDataClass
             PhoneNumber = "+7 999 555-66-77"
         }
     ];
-
+    /// <summary>
+    /// Collection of 10 real estate transaction applications spanning buy and sell operations.
+    /// Represents complete business transactions with linked counterparties and properties.
+    /// </summary>
     public List<Application> Applications =>
     [
         new Application

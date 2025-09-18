@@ -3,11 +3,18 @@ using EstateAgency.Test.Data;
 
 namespace EstateAgency.Test;
 
+/// <summary>
+/// Contains unit tests for verifying business intelligence queries on real estate agency data.
+/// Tests cover sales analytics, client ranking, property statistics, and financial analysis.
+/// Uses FixtureDataClass as a shared test data fixture for consistent data across all tests.
+/// </summary>
 public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureDataClass>
 {
     private readonly FixtureDataClass _testData = testData;
 
-
+    /// <summary>
+    /// Tests retrieval of all sellers who submitted sale applications within a specified date range.
+    /// </summary>
     [Fact]
     public void GetSellersByPeriod()
     {
@@ -24,6 +31,9 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
         Assert.Equal(expected, sellers);
     }
 
+    /// <summary>
+    /// Tests identification of top 5 clients by number of applications submitted, separated by transaction type.
+    /// </summary>
     [Fact]
     public void GetTop5ClientsByRequests()
     {
@@ -68,7 +78,9 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
         Assert.Equal(expectedTopSellers, topSellers);
     }
 
-
+    /// <summary>
+    /// Tests calculation of application count distribution across different real estate property types.
+    /// </summary>
     [Fact]
     public void GetRequestCountByObjectType()
     {
@@ -96,6 +108,9 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
         Assert.Equal(expectedGarages, stats[ObjectType.Garage]);
     }
 
+    /// <summary>
+    /// Tests identification of clients associated with applications having the minimum transaction amount.
+    /// </summary>
     [Fact]
     public void GetClientsWithMinPriceRequests()
     {
@@ -114,6 +129,9 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
         Assert.Equal(expectedClient, clients);
     }
 
+    /// <summary>
+    /// Tests retrieval of clients interested in purchasing specific types of real estate properties.
+    /// </summary>
     [Fact]
     public void GetClientsByEstateType()
     {
