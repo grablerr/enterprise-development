@@ -6,7 +6,7 @@ namespace EstateAgency.Domain.Entities;
 /// Represents a real estate property object in the agency system.
 /// Contains comprehensive physical and legal characteristics of a property for listing and transaction purposes.
 /// </summary>
-public class EstateObject
+public class RealEstate
 {
     /// <summary>
     /// Unique identifier for the real estate object
@@ -16,12 +16,12 @@ public class EstateObject
     /// <summary>
     /// Classification type of the property
     /// </summary>
-    public ObjectType Type { get; set; }
+    public required ObjectType Type { get; set; }
 
     /// <summary>
     /// Intended usage purpose of the property
     /// </summary>
-    public ObjectPurpose Purpose { get; set; }
+    public required ObjectPurpose Purpose { get; set; }
 
     /// <summary>
     /// Official cadastral registration number from the state registry
@@ -36,12 +36,12 @@ public class EstateObject
     /// <summary>
     /// Current floor number where the property is located
     /// </summary>
-    public int FloorNumber { get; set; }
+    public int? FloorNumber { get; set; }
 
     /// <summary>
     /// Total number of floors in the building
     /// </summary>
-    public int Floors { get; set; }
+    public int? Floors { get; set; }
 
     /// <summary>
     /// Total area of the property in square meters
@@ -51,12 +51,12 @@ public class EstateObject
     /// <summary>
     /// Number of rooms in the property
     /// </summary>
-    public int Rooms { get; set; }
+    public int? Rooms { get; set; }
 
     /// <summary>
     /// Height of ceilings in centimeters
     /// </summary>
-    public int CeilingHeight { get; set; }
+    public double? CeilingHeight { get; set; }
 
     /// <summary>
     /// Indicates if the property has any legal encumbrances, liens, or restrictions

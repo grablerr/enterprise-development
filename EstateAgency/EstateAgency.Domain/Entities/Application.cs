@@ -16,22 +16,22 @@ public class Application
     /// <summary>
     /// Foreign key reference to the counterparty (agent) associated with this application
     /// </summary>
-    public required int AgentId { get; set; }
+    public required int CounterpartyId { get; set; }
 
     /// <summary>
     /// Navigation property to the counterparty (agent) details
     /// </summary>
-    public Counterparty? AgentInfo { get; set; }
+    public Counterparty? Counterparty { get; set; }
 
     /// <summary>
     /// Foreign key reference to the real estate object involved in the transaction
     /// </summary>
-    public required int ObjectId { get; set; }
+    public required int RealEstateId { get; set; }
 
     /// <summary>
     /// Navigation property to the real estate object details
     /// </summary>
-    public EstateObject? ObjectInfo { get; set; }
+    public RealEstate? RealEstate { get; set; }
 
     /// <summary>
     /// Monetary amount of the transaction in the application
@@ -46,5 +46,5 @@ public class Application
     /// <summary>
     /// Date when the application was created or submitted
     /// </summary>
-    public DateTime? Date { get; set; }
+    public required DateTime Date { get; set; }
 }

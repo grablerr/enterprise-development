@@ -13,14 +13,14 @@ public class FixtureDataClass
     /// <summary>
     /// Collection of 10 diverse real estate objects representing various property types and purposes.
     /// </summary>
-    public List<EstateObject> EstateObjects =>
+    public List<RealEstate> EstateObjects =>
     [
-        new EstateObject
+        new RealEstate
         {
             Id = 1,
             Type = ObjectType.Apartment,
             Purpose = ObjectPurpose.Residential,
-            CadastralNumber = "12:34:5678",
+            CadastralNumber = "12:34:5678912:3456",
             Address = "ул. Ленина, д. 15, кв. 34",
             FloorNumber = 3,
             Floors = 5,
@@ -28,14 +28,13 @@ public class FixtureDataClass
             Rooms = 2,
             CeilingHeight = 270,
             IsEncumbrance = false
-
-         },
-        new EstateObject
+        },
+        new RealEstate
         {
             Id = 2,
             Type = ObjectType.House,
             Purpose = ObjectPurpose.Residential,
-            CadastralNumber = "23:45:6789",
+            CadastralNumber = "23:45:6789012:7890",
             Address = "ул. Садовая, д. 42",
             FloorNumber = 1,
             Floors = 2,
@@ -44,12 +43,12 @@ public class FixtureDataClass
             CeilingHeight = 280,
             IsEncumbrance = true
         },
-        new EstateObject
+        new RealEstate
         {
             Id = 3,
             Type = ObjectType.Office,
             Purpose = ObjectPurpose.Commercial,
-            CadastralNumber = "34:56:7890",
+            CadastralNumber = "34:56:7890123:123",
             Address = "пр. Мира, д. 88, оф. 305",
             FloorNumber = 3,
             Floors = 10,
@@ -58,12 +57,12 @@ public class FixtureDataClass
             CeilingHeight = 300,
             IsEncumbrance = false
         },
-        new EstateObject
+        new RealEstate
         {
             Id = 4,
             Type = ObjectType.Cottage,
             Purpose = ObjectPurpose.Residential,
-            CadastralNumber = "45:67:8901",
+            CadastralNumber = "45:67:8901234:56789",
             Address = "пос. Дачный, ул. Центральная, д. 7",
             FloorNumber = 1,
             Floors = 1,
@@ -72,12 +71,12 @@ public class FixtureDataClass
             CeilingHeight = 290,
             IsEncumbrance = false
         },
-        new EstateObject
+        new RealEstate
         {
             Id = 5,
             Type = ObjectType.Warehouse,
             Purpose = ObjectPurpose.Industrial,
-            CadastralNumber = "56:78:9012",
+            CadastralNumber = "56:78:9012345:1",
             Address = "промзона, складской комплекс №5",
             FloorNumber = 1,
             Floors = 1,
@@ -86,12 +85,12 @@ public class FixtureDataClass
             CeilingHeight = 400,
             IsEncumbrance = true
         },
-        new EstateObject
+        new RealEstate
         {
             Id = 6,
             Type = ObjectType.Townhouse,
             Purpose = ObjectPurpose.Residential,
-            CadastralNumber = "67:89:0123",
+            CadastralNumber = "67:89:0123456:999999",
             Address = "ул. Парковая, д. 25",
             FloorNumber = 2,
             Floors = 3,
@@ -100,12 +99,12 @@ public class FixtureDataClass
             CeilingHeight = 275,
             IsEncumbrance = false
         },
-        new EstateObject
+        new RealEstate
         {
             Id = 7,
             Type = ObjectType.Shop,
             Purpose = ObjectPurpose.Commercial,
-            CadastralNumber = "78:90:1234",
+            CadastralNumber = "78:90:1234567:88",
             Address = "ТЦ 'Европа', 1 этаж, пав. 12",
             FloorNumber = 1,
             Floors = 3,
@@ -114,12 +113,12 @@ public class FixtureDataClass
             CeilingHeight = 320,
             IsEncumbrance = false
         },
-        new EstateObject
+        new RealEstate
         {
             Id = 8,
             Type = ObjectType.Garage,
             Purpose = ObjectPurpose.Commercial,
-            CadastralNumber = "89:01:2345",
+            CadastralNumber = "89:01:2345678:0",
             Address = "Гаражный кооператив 'Мотор', бокс 15",
             FloorNumber = 1,
             Floors = 1,
@@ -128,12 +127,12 @@ public class FixtureDataClass
             CeilingHeight = 250,
             IsEncumbrance = true
         },
-        new EstateObject
+        new RealEstate
         {
             Id = 9,
             Type = ObjectType.Apartment,
             Purpose = ObjectPurpose.Residential,
-            CadastralNumber = "90:12:3456",
+            CadastralNumber = "90:12:3456789:123456789",
             Address = "пр. Победы, д. 112, кв. 89",
             FloorNumber = 9,
             Floors = 12,
@@ -142,12 +141,12 @@ public class FixtureDataClass
             CeilingHeight = 265,
             IsEncumbrance = false
         },
-        new EstateObject
+        new RealEstate
         {
             Id = 10,
             Type = ObjectType.Office,
             Purpose = ObjectPurpose.Commercial,
-            CadastralNumber = "01:23:4567",
+            CadastralNumber = "01:23:4567890:4567",
             Address = "Бизнес-центр 'Старт', оф. 405",
             FloorNumber = 4,
             Floors = 8,
@@ -208,10 +207,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 1,
-            AgentId = 1,
-            AgentInfo = Counterparties[0],
-            ObjectId = 1,
-            ObjectInfo = EstateObjects[0],
+            CounterpartyId = 1,
+            Counterparty = Counterparties[0],
+            RealEstateId = 1,
+            RealEstate = EstateObjects[0],
             TransactionAmount = 8_000_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 5, 10)
@@ -219,10 +218,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 2,
-            AgentId = 2,
-            AgentInfo = Counterparties[1],
-            ObjectId = 2,
-            ObjectInfo = EstateObjects[1], //house
+            CounterpartyId = 2,
+            Counterparty = Counterparties[1],
+            RealEstateId = 2,
+            RealEstate = EstateObjects[1], //house
             TransactionAmount = 12_500_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 5, 15)
@@ -230,10 +229,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 3,
-            AgentId = 3,
-            AgentInfo = Counterparties[2],
-            ObjectId = 3,
-            ObjectInfo = EstateObjects[2],
+            CounterpartyId = 3,
+            Counterparty = Counterparties[2],
+            RealEstateId = 3,
+            RealEstate = EstateObjects[2],
             TransactionAmount = 5_200_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 5, 20)
@@ -241,10 +240,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 4,
-            AgentId = 4,
-            AgentInfo = Counterparties[3],
-            ObjectId = 4,
-            ObjectInfo = EstateObjects[3],
+            CounterpartyId = 4,
+            Counterparty = Counterparties[3],
+            RealEstateId = 4,
+            RealEstate = EstateObjects[3],
             TransactionAmount = 9_800_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 5, 25)
@@ -252,10 +251,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 5,
-            AgentId = 5,
-            AgentInfo = Counterparties[4],
-            ObjectId = 5,
-            ObjectInfo = EstateObjects[4],
+            CounterpartyId = 5,
+            Counterparty = Counterparties[4],
+            RealEstateId = 5,
+            RealEstate = EstateObjects[4],
             TransactionAmount = 18_000_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 6, 1)
@@ -263,10 +262,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 6,
-            AgentId = 1,
-            AgentInfo = Counterparties[0],
-            ObjectId = 6,
-            ObjectInfo = EstateObjects[5],
+            CounterpartyId = 1,
+            Counterparty = Counterparties[0],
+            RealEstateId = 6,
+            RealEstate = EstateObjects[5],
             TransactionAmount = 15_300_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 6, 5)
@@ -274,10 +273,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 7,
-            AgentId = 2,
-            AgentInfo = Counterparties[1],
-            ObjectId = 7,
-            ObjectInfo = EstateObjects[6],
+            CounterpartyId = 2,
+            Counterparty = Counterparties[1],
+            RealEstateId = 7,
+            RealEstate = EstateObjects[6],
             TransactionAmount = 6_700_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 6, 10)
@@ -285,10 +284,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 8,
-            AgentId = 3,
-            AgentInfo = Counterparties[2],
-            ObjectId = 8,
-            ObjectInfo = EstateObjects[7],
+            CounterpartyId = 3,
+            Counterparty = Counterparties[2],
+            RealEstateId = 8,
+            RealEstate = EstateObjects[7],
             TransactionAmount = 3_500_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 6, 15)
@@ -296,10 +295,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 9,
-            AgentId = 1,
-            AgentInfo = Counterparties[0],
-            ObjectId = 9,
-            ObjectInfo = EstateObjects[8],
+            CounterpartyId = 1,
+            Counterparty = Counterparties[0],
+            RealEstateId = 9,
+            RealEstate = EstateObjects[8],
             TransactionAmount = 10_100_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 6, 20)
@@ -307,10 +306,10 @@ public class FixtureDataClass
         new Application
         {
             Id = 10,
-            AgentId = 2,
-            AgentInfo = Counterparties[1],
-            ObjectId = 10,
-            ObjectInfo = EstateObjects[9],
+            CounterpartyId = 2,
+            Counterparty = Counterparties[1],
+            RealEstateId = 10,
+            RealEstate = EstateObjects[9],
             TransactionAmount = 7_900_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 6, 25)
