@@ -1,19 +1,40 @@
+using Microsoft.EntityFrameworkCore;
+
+//using Application.Services;
+using EstateAgency.Domain.Interfaces;
+using Infrastructure.Persistence;
+using Infrastructure.Repositories;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-// Add services to the container.
+builder.AddMySqlDbContext<AppDbContext>(connectionName: "DefaultConnection");
+
+
+
+builder.Services.AddScoped<ICounterpartyRepository, CounterpartyRepository>();
+builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
+builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
+
+//builder.Services.AddScoped<AnalyticsService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.MapDefaultEndpoints();
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
 
-// Configure the HTTP request pipeline.
+
+
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -21,9 +42,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
+app.MapDefaultEndpoints();
 app.MapControllers();
-
-app.Run();
