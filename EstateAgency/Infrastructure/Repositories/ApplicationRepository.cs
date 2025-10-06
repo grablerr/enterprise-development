@@ -40,9 +40,7 @@ public class ApplicationRepository(AppDbContext context) : IApplicationRepositor
         if (toUpdate == null) throw new KeyNotFoundException($"Estate with Id {application.Id} not found.");
 
         toUpdate.CounterpartyId = application.CounterpartyId;
-        toUpdate.Counterparty = application.Counterparty;
         toUpdate.RealEstateId = application.RealEstateId;
-        toUpdate.RealEstate = application.RealEstate;
         toUpdate.TransactionAmount = application.TransactionAmount;
         toUpdate.Type = application.Type;
         toUpdate.Date = application.Date;

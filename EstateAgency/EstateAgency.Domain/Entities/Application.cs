@@ -21,7 +21,7 @@ public class Application
     /// <summary>
     /// Navigation property to the counterparty (agent) details
     /// </summary>
-    public Counterparty? Counterparty { get; set; }
+    //public Counterparty? Counterparty { get; set; }
 
     /// <summary>
     /// Foreign key reference to the real estate object involved in the transaction
@@ -31,7 +31,7 @@ public class Application
     /// <summary>
     /// Navigation property to the real estate object details
     /// </summary>
-    public RealEstate? RealEstate { get; set; }
+    //public RealEstate? RealEstate { get; set; }
 
     /// <summary>
     /// Monetary amount of the transaction in the application

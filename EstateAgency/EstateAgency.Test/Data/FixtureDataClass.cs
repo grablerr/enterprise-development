@@ -208,9 +208,9 @@ public class FixtureDataClass
         {
             Id = 1,
             CounterpartyId = 1,
-            Counterparty = Counterparties[0],
+            //Counterparty = Counterparties[0],
             RealEstateId = 1,
-            RealEstate = EstateObjects[0],
+            //RealEstate = EstateObjects[0],
             TransactionAmount = 8_000_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 5, 10)
@@ -219,9 +219,9 @@ public class FixtureDataClass
         {
             Id = 2,
             CounterpartyId = 2,
-            Counterparty = Counterparties[1],
+            //Counterparty = Counterparties[1],
             RealEstateId = 2,
-            RealEstate = EstateObjects[1], //house
+            //RealEstate = EstateObjects[1], //house
             TransactionAmount = 12_500_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 5, 15)
@@ -230,9 +230,9 @@ public class FixtureDataClass
         {
             Id = 3,
             CounterpartyId = 3,
-            Counterparty = Counterparties[2],
+            //Counterparty = Counterparties[2],
             RealEstateId = 3,
-            RealEstate = EstateObjects[2],
+            //RealEstate = EstateObjects[2],
             TransactionAmount = 5_200_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 5, 20)
@@ -241,9 +241,9 @@ public class FixtureDataClass
         {
             Id = 4,
             CounterpartyId = 4,
-            Counterparty = Counterparties[3],
+            //Counterp.arty = Counterparties[3],
             RealEstateId = 4,
-            RealEstate = EstateObjects[3],
+            //RealEstate = EstateObjects[3],
             TransactionAmount = 9_800_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 5, 25)
@@ -252,9 +252,9 @@ public class FixtureDataClass
         {
             Id = 5,
             CounterpartyId = 5,
-            Counterparty = Counterparties[4],
+            //Counterparty = Counterparties[4],
             RealEstateId = 5,
-            RealEstate = EstateObjects[4],
+            //RealEstate = EstateObjects[4],
             TransactionAmount = 18_000_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 6, 1)
@@ -263,9 +263,9 @@ public class FixtureDataClass
         {
             Id = 6,
             CounterpartyId = 1,
-            Counterparty = Counterparties[0],
+            //Counterparty = Counterparties[0],
             RealEstateId = 6,
-            RealEstate = EstateObjects[5],
+            //RealEstate = EstateObjects[5],
             TransactionAmount = 15_300_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 6, 5)
@@ -274,9 +274,9 @@ public class FixtureDataClass
         {
             Id = 7,
             CounterpartyId = 2,
-            Counterparty = Counterparties[1],
+            //Counterparty = Counterparties[1],
             RealEstateId = 7,
-            RealEstate = EstateObjects[6],
+            //RealEstate = EstateObjects[6],
             TransactionAmount = 6_700_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 6, 10)
@@ -285,9 +285,9 @@ public class FixtureDataClass
         {
             Id = 8,
             CounterpartyId = 3,
-            Counterparty = Counterparties[2],
+            //Counterparty = Counterparties[2],
             RealEstateId = 8,
-            RealEstate = EstateObjects[7],
+            //RealEstate = EstateObjects[7],
             TransactionAmount = 3_500_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 6, 15)
@@ -296,9 +296,9 @@ public class FixtureDataClass
         {
             Id = 9,
             CounterpartyId = 1,
-            Counterparty = Counterparties[0],
+            //Counterparty = Counterparties[0],
             RealEstateId = 9,
-            RealEstate = EstateObjects[8],
+            //RealEstate = EstateObjects[8],
             TransactionAmount = 10_100_000m,
             Type = ApplicationType.Sell,
             Date = new DateTime(2024, 6, 20)
@@ -307,9 +307,9 @@ public class FixtureDataClass
         {
             Id = 10,
             CounterpartyId = 2,
-            Counterparty = Counterparties[1],
+            //Counterparty = Counterparties[1],
             RealEstateId = 10,
-            RealEstate = EstateObjects[9],
+            //RealEstate = EstateObjects[9],
             TransactionAmount = 7_900_000m,
             Type = ApplicationType.Buy,
             Date = new DateTime(2024, 6, 25)

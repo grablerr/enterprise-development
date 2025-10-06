@@ -1,18 +1,17 @@
-using Microsoft.EntityFrameworkCore;
-
 //using Application.Services;
 using EstateAgency.Domain.Interfaces;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.AddServiceDefaults();
 
 builder.AddMySqlDbContext<AppDbContext>(connectionName: "DefaultConnection");
-
-
 
 builder.Services.AddScoped<ICounterpartyRepository, CounterpartyRepository>();
 builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
@@ -30,9 +29,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
-
-
-
+    await DbSeeder.SeedAsync(db);
 }
 
 if (app.Environment.IsDevelopment())

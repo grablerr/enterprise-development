@@ -19,10 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EstateAgency.Domain\EstateAgency.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\EstateAgency.Test\EstateAgency.Test.csproj" />
   </ItemGroup>
 
 </Project>

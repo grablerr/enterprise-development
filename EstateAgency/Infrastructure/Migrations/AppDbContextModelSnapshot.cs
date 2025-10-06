@@ -134,21 +134,17 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("EstateAgency.Domain.Entities.Application", b =>
                 {
-                    b.HasOne("EstateAgency.Domain.Entities.Counterparty", "Counterparty")
+                    b.HasOne("EstateAgency.Domain.Entities.Counterparty", null)
                         .WithMany()
                         .HasForeignKey("CounterpartyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EstateAgency.Domain.Entities.RealEstate", "RealEstate")
+                    b.HasOne("EstateAgency.Domain.Entities.RealEstate", null)
                         .WithMany()
                         .HasForeignKey("RealEstateId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Counterparty");
-
-                    b.Navigation("RealEstate");
                 });
 #pragma warning restore 612, 618
         }

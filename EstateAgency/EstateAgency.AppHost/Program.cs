@@ -1,5 +1,11 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<Projects.Api>("api");
+var mySql = builder.AddMySql("mysql");
+
+var mySqlDb = mySql.AddDatabase("RealEstateDb");
+
+var api = builder.AddProject<Projects.Api>("Api")
+    .WithReference(mySqlDb, "DefaultConnection")
+    .WaitFor(mySqlDb);
 
 builder.Build().Run();

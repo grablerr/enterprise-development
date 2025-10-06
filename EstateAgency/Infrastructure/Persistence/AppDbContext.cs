@@ -83,20 +83,14 @@ public class AppDbContext : DbContext
                 .IsRequired()
                 .ValueGeneratedOnAdd();
 
-            a.Property(a => a.CounterpartyId)
-                .IsRequired();
-
-            a.HasOne(a => a.Counterparty)
+            a.HasOne<Counterparty>()
                 .WithMany()
-                .HasForeignKey(e => e.CounterpartyId)
+                .HasForeignKey(a => a.CounterpartyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            a.Property(a => a.RealEstateId)
-                .IsRequired();
-
-            a.HasOne(a => a.RealEstate)
+            a.HasOne<RealEstate>()
                 .WithMany()
-                .HasForeignKey(e => e.RealEstateId)
+                .HasForeignKey(a => a.RealEstateId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             a.Property(a => a.TransactionAmount)
