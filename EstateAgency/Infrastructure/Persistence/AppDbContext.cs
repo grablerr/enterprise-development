@@ -6,7 +6,7 @@ public class AppDbContext : DbContext
 {
     public DbSet<RealEstate> RealEstates { get; set; }
 
-    public DbSet<Counterparty> Counterpartys { get; set; }
+    public DbSet<Counterparty> Counterparties { get; set; }
 
     public DbSet<Application> Applications { get; set; }
 

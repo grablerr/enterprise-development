@@ -1,38 +1,49 @@
 ﻿using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
 using Infrastructure.Persistence;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 public class CounterpartyRepository(AppDbContext context) : ICounterpartyRepository
 {
-    public Task<Counterparty> AddAsync(Counterparty counterparty)
+    public async Task AddAsync(Counterparty counterparty)
     {
-        throw new NotImplementedException();
+        if (counterparty == null) throw new ArgumentNullException(nameof(counterparty));
+
+        await context.Counterparties.AddAsync(counterparty);
+        await context.SaveChangesAsync();
     }
 
-    public Task<Counterparty> DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var counterparty = await context.Counterparties.FindAsync(id);
+        if (counterparty == null) throw new KeyNotFoundException($"Counterparty with Id {id} not found.");
+
+        context.Counterparties.Remove(counterparty);
+        await context.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<Counterparty>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<Counterparty>> GetAllAsync() =>
+        await context.Counterparties.ToListAsync();
 
-    public Task<Counterparty> GetByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Counterparty> GetByIdAsync(int id) =>
+        await context.Counterparties.FindAsync(id);
 
-    public Task<Counterparty> IsExistsAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<bool> IsExistsAsync(int id) =>
+        await context.Counterparties.AnyAsync(c => c.Id == id);
 
-    public Task<Counterparty> UpdateAsync(Counterparty counterparty)
+    public async Task UpdateAsync(Counterparty counterparty)
     {
-        throw new NotImplementedException();
+        if (counterparty == null) throw new ArgumentNullException(nameof(counterparty));
+        var toUpdate = await context.Counterparties.FindAsync(counterparty.Id);
+        if (toUpdate == null) throw new KeyNotFoundException($"Estate with Id {counterparty.Id} not found.");
+
+        toUpdate.FullName = counterparty.FullName;
+        toUpdate.PassportNumber = counterparty.PassportNumber;
+        toUpdate.PhoneNumber = counterparty.PhoneNumber;
+
+        context.Counterparties.Update(toUpdate);
+        await context.SaveChangesAsync();
+
     }
 }
