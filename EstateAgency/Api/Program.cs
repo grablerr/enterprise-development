@@ -1,13 +1,9 @@
-//using Application.Services;
+using Microsoft.EntityFrameworkCore;
 using EstateAgency.Domain.Interfaces;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System.Configuration;
-
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.AddServiceDefaults();
 
@@ -17,13 +13,14 @@ builder.Services.AddScoped<ICounterpartyRepository, CounterpartyRepository>();
 builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
 builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
 
-//builder.Services.AddScoped<AnalyticsService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -40,5 +37,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.MapDefaultEndpoints();
 app.MapControllers();
+
+app.Run();

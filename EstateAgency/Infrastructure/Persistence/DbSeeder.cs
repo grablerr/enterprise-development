@@ -14,21 +14,21 @@ public static class DbSeeder
         {
             await context.RealEstates.AddRangeAsync(fixture.EstateObjects);
             await context.SaveChangesAsync();
-            await context.Database.ExecuteSqlRawAsync($"ALTER TABLE RealEstates AUTO_INCREMENT = {GetMaxId(fixture.EstateObjects) + 1};");
+            await context.Database.ExecuteSqlAsync($"ALTER TABLE RealEstates AUTO_INCREMENT = {GetMaxId(fixture.EstateObjects) + 1};");
         }
 
         if (!await context.Counterparties.AnyAsync())
         {
             await context.Counterparties.AddRangeAsync(fixture.Counterparties);
             await context.SaveChangesAsync();
-            await context.Database.ExecuteSqlRawAsync($"ALTER TABLE Counterparties AUTO_INCREMENT = {GetMaxId(fixture.Counterparties) + 1};");
+            await context.Database.ExecuteSqlAsync($"ALTER TABLE Counterparties AUTO_INCREMENT = {GetMaxId(fixture.Counterparties) + 1};");
         }
 
-        if (!await context.Applications.AnyAsync()) 
+        if (!await context.Applications.AnyAsync())
         {
             await context.Applications.AddRangeAsync(fixture.Applications);
             await context.SaveChangesAsync();
-            await context.Database.ExecuteSqlRawAsync($"ALTER TABLE Applications AUTO_INCREMENT = {GetMaxId(fixture.Applications) + 1};");
+            await context.Database.ExecuteSqlAsync($"ALTER TABLE Applications AUTO_INCREMENT = {GetMaxId(fixture.Applications) + 1};");
         }
     }
 
