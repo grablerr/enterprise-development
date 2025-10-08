@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using EstateAgency.Domain.Entities;
+﻿using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Api.Controllers;
@@ -53,7 +54,17 @@ public class RealEstateController(IRealEstateRepository realEstateRepository) : 
         var old = await realEstateRepository.GetByIdAsync(id);
         if (old == null) return NotFound();
 
-        upd.Id = old.Id;
+        old.Id = upd.Id;
+        old.Type = upd.Type;
+        old.Purpose = upd.Purpose;
+        old.CadastralNumber = upd.CadastralNumber;
+        old.Address = upd.Address;
+        old.FloorNumber = upd.FloorNumber;
+        old.Floors = upd.Floors;
+        old.Square = upd.Square;
+        old.Rooms = upd.Rooms;
+        old.CeilingHeight = upd.CeilingHeight;
+        old.IsEncumbrance = upd.IsEncumbrance;
         await realEstateRepository.UpdateAsync(old);
 
         return NoContent();

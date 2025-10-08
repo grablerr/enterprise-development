@@ -52,11 +52,14 @@ public class CounterpartyController(ICounterpartyRepository counterpartyReposito
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        var counterparty = await counterpartyRepository.GetByIdAsync(id);
-        if (counterparty == null) return NotFound();
+        var old = await counterpartyRepository.GetByIdAsync(id);
+        if (old == null) return NotFound();
 
-        upd.Id = counterparty.Id;
-        await counterpartyRepository.UpdateAsync(upd);
+        old.Id = upd.Id;
+        old.FullName = upd.FullName;
+        old.PassportNumber = upd.PassportNumber;
+        old.PhoneNumber = upd.PhoneNumber;
+        await counterpartyRepository.UpdateAsync(old);
 
         return NoContent();
     }

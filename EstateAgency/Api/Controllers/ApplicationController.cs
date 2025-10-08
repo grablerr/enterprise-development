@@ -71,11 +71,16 @@ public class ApplicationController(
 
         if (!isRealEstateExists || !isCounterpartyExists) return NotFound();
 
-        var application = await applicationRepository.GetByIdAsync(id);
-        if (application == null) return NotFound();
+        var old = await applicationRepository.GetByIdAsync(id);
+        if (old == null) return NotFound();
 
-        upd.Id = application.Id;
-        await applicationRepository.UpdateAsync(upd);
+        old.Id = upd.Id;
+        old.CounterpartyId = upd.CounterpartyId;
+        old.RealEstateId = upd.RealEstateId;
+        old.TransactionAmount = upd.TransactionAmount;
+        old.Type = upd.Type;
+        old.Date = upd.Date;
+        await applicationRepository.UpdateAsync(old);
 
         return NoContent();
     }
