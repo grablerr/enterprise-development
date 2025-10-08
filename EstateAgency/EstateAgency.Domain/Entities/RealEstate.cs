@@ -16,12 +16,12 @@ public class RealEstate
     /// <summary>
     /// Classification type of the property
     /// </summary>
-    public required ObjectType Type { get; set; }
+    public required RealEstateType Type { get; set; }
 
     /// <summary>
     /// Intended usage purpose of the property
     /// </summary>
-    public required ObjectPurpose Purpose { get; set; }
+    public required RealEstatePurpose Purpose { get; set; }
 
     /// <summary>
     /// Official cadastral registration number from the state registry

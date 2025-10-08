@@ -6,8 +6,6 @@ namespace Api.Controllers;
 [ApiController]
 [Route("api/counterparties")]
 public class CounterpartyController(ICounterpartyRepository counterpartyRepository) : ControllerBase
-
-
 {
     [HttpGet("")]
     public async Task<IActionResult> GetAllConterparties()
@@ -41,7 +39,6 @@ public class CounterpartyController(ICounterpartyRepository counterpartyReposito
     public async Task<IActionResult> CreateCounterparty([FromBody] Counterparty toCreate)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
-
 
         await counterpartyRepository.AddAsync(toCreate);
         return CreatedAtAction(nameof(GetCounterpartyById), new { id = toCreate.Id }, toCreate);

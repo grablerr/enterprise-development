@@ -19,19 +19,9 @@ public class Application
     public required int CounterpartyId { get; set; }
 
     /// <summary>
-    /// Navigation property to the counterparty (agent) details
-    /// </summary>
-    //public Counterparty? Counterparty { get; set; }
-
-    /// <summary>
     /// Foreign key reference to the real estate object involved in the transaction
     /// </summary>
     public required int RealEstateId { get; set; }
-
-    /// <summary>
-    /// Navigation property to the real estate object details
-    /// </summary>
-    //public RealEstate? RealEstate { get; set; }
 
     /// <summary>
     /// Monetary amount of the transaction in the application

@@ -41,7 +41,6 @@ public class RealEstateController(IRealEstateRepository realEstateRepository) : 
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-
         await realEstateRepository.AddAsync(toCreate);
         return CreatedAtAction(nameof(GetRealEstateById), new { id = toCreate.Id }, toCreate);
     }

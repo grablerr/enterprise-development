@@ -3,7 +3,7 @@
 /// <summary>
 /// Defines the specific architectural and structural types of real estate properties.
 /// </summary>
-public enum ObjectType
+public enum RealEstateType
 {
     /// <summary>
     /// Self-contained residential unit within a larger multi-story building

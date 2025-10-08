@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.AppHost", "Est
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.ServiceDefaults", "EstateAgency.ServiceDefaults\EstateAgency.ServiceDefaults.csproj", "{537E4AFC-C12D-862A-4887-FDA46A35C012}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{4A4863E8-EB9F-4D55-A1E6-58ABF84B4CCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{537E4AFC-C12D-862A-4887-FDA46A35C012}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{537E4AFC-C12D-862A-4887-FDA46A35C012}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{537E4AFC-C12D-862A-4887-FDA46A35C012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A4863E8-EB9F-4D55-A1E6-58ABF84B4CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A4863E8-EB9F-4D55-A1E6-58ABF84B4CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A4863E8-EB9F-4D55-A1E6-58ABF84B4CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A4863E8-EB9F-4D55-A1E6-58ABF84B4CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

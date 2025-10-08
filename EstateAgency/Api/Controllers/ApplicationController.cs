@@ -9,15 +9,12 @@ public class ApplicationController(
     IApplicationRepository applicationRepository,
     IRealEstateRepository realEstateRepository,
     ICounterpartyRepository counterpartyRepository) : ControllerBase
-
 {
-
     [HttpGet("")]
     public async Task<IActionResult> GetAllApplications()
     {
         var applications = await applicationRepository.GetAllAsync();
         return Ok(applications);
-
     }
 
     [HttpGet("{id:int}")]
@@ -47,7 +44,7 @@ public class ApplicationController(
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> CreateApplication([FromBody] Application toCreate)
+    public async Task<IActionResult> CreateApplication([FromBody] EstateAgency.Domain.Entities.Application toCreate)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -56,13 +53,12 @@ public class ApplicationController(
 
         if (!isRealEstateExists || !isCounterpartyExists) return NotFound();
 
-
         await applicationRepository.AddAsync(toCreate);
         return CreatedAtAction(nameof(GetApplicationById), new { id = toCreate.Id }, toCreate);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateApplication(int id, [FromBody] Application upd)
+    public async Task<IActionResult> UpdateApplication(int id, [FromBody] EstateAgency.Domain.Entities.Application upd)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 

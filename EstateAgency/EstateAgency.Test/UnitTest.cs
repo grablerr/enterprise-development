@@ -21,7 +21,6 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
         var to = new DateTime(2024, 6, 30);
         var expected = new[] { "Ivan Ivanov", "Sergey Sidorov", "Dmitry Volkov", "Maria Petrova" };
 
-        // Получаем имена контрагентов, применяя фильтр по типу и дате
         var sellers = testData.Applications
             .Where(r => r.Type == ApplicationType.Sell && r.Date >= from && r.Date <= to)
             .Select(r => testData.Counterparties.FirstOrDefault(c => c.Id == r.CounterpartyId)?.FullName)
@@ -54,8 +53,6 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
         "Maria Petrova",
         "Sergey Sidorov"
     };
-
-        // Получаем топ покупателей
         var topBuyers = testData.Applications
             .Where(r => r.Type == ApplicationType.Buy)
             .Select(r => testData.Counterparties.FirstOrDefault(c => c.Id == r.CounterpartyId)?.FullName)
@@ -68,7 +65,6 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
             .Select(x => x.Client)
             .ToList();
 
-        // Получаем топ продавцов
         var topSellers = testData.Applications
             .Where(r => r.Type == ApplicationType.Sell)
             .Select(r => testData.Counterparties.FirstOrDefault(c => c.Id == r.CounterpartyId)?.FullName)
@@ -92,20 +88,17 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
     [Fact]
     public void GetRequestCountByObjectType()
     {
-        var expectedCount = new Dictionary<ObjectType, int>
+        var expectedCount = new Dictionary<RealEstateType, int>
     {
-        { ObjectType.Apartment, 2 },
-        { ObjectType.House, 1 },
-        { ObjectType.Office, 2 },
-        { ObjectType.Cottage, 1 },
-        { ObjectType.Warehouse, 1 },
-        { ObjectType.Townhouse, 1 },
-        { ObjectType.Shop, 1 },
-        { ObjectType.Garage, 1 }
+        { RealEstateType.Apartment, 2 },
+        { RealEstateType.House, 1 },
+        { RealEstateType.Office, 2 },
+        { RealEstateType.Cottage, 1 },
+        { RealEstateType.Warehouse, 1 },
+        { RealEstateType.Townhouse, 1 },
+        { RealEstateType.Shop, 1 },
+        { RealEstateType.Garage, 1 }
     };
-
-        // Сгруппировать заявки по типу объекта недвижимости,
-        // полученному через testData.RealEstates по RealEstateId
         var stats = testData.Applications
             .Select(r => testData.EstateObjects.FirstOrDefault(re => re.Id == r.RealEstateId)?.Type)
             .Where(type => type != null)
@@ -127,10 +120,8 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
         const decimal expectedMinPrice = 3_500_000m;
         var expectedClient = new[] { "Sergey Sidorov" };
 
-        // Вычисляем минимальную сумму по всем заявкам
         var minPrice = testData.Applications.Min(r => r.TransactionAmount);
 
-        // Получаем имена контрагентов, у заявок с минимальной суммой
         var clients = testData.Applications
             .Where(r => r.TransactionAmount == minPrice)
             .Select(r => testData.Counterparties.FirstOrDefault(c => c.Id == r.CounterpartyId)?.FullName)
@@ -149,7 +140,7 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
     [Fact]
     public void GetClientsByEstateType()
     {
-        const ObjectType targetType = ObjectType.House;
+        const RealEstateType targetType = RealEstateType.House;
         var expectedClients = new[] { "Maria Petrova" };
 
         var clients = testData.Applications

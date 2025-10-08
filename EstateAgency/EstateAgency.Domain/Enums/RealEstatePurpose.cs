@@ -3,7 +3,7 @@
 /// <summary>
 /// Defines the intended usage and functional purpose categories for real estate properties.
 /// </summary>
-public enum ObjectPurpose
+public enum RealEstatePurpose
 {
     /// <summary>
     /// Properties designated for living accommodations and dwelling purposes

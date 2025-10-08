@@ -18,8 +18,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 1,
-            Type = ObjectType.Apartment,
-            Purpose = ObjectPurpose.Residential,
+            Type = RealEstateType.Apartment,
+            Purpose = RealEstatePurpose.Residential,
             CadastralNumber = "12:34:5678912:3456",
             Address = "ул. Ленина, д. 15, кв. 34",
             FloorNumber = 3,
@@ -32,8 +32,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 2,
-            Type = ObjectType.House,
-            Purpose = ObjectPurpose.Residential,
+            Type = RealEstateType.House,
+            Purpose = RealEstatePurpose.Residential,
             CadastralNumber = "23:45:6789012:7890",
             Address = "ул. Садовая, д. 42",
             FloorNumber = 1,
@@ -46,8 +46,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 3,
-            Type = ObjectType.Office,
-            Purpose = ObjectPurpose.Commercial,
+            Type = RealEstateType.Office,
+            Purpose = RealEstatePurpose.Commercial,
             CadastralNumber = "34:56:7890123:123",
             Address = "пр. Мира, д. 88, оф. 305",
             FloorNumber = 3,
@@ -60,8 +60,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 4,
-            Type = ObjectType.Cottage,
-            Purpose = ObjectPurpose.Residential,
+            Type = RealEstateType.Cottage,
+            Purpose = RealEstatePurpose.Residential,
             CadastralNumber = "45:67:8901234:56789",
             Address = "пос. Дачный, ул. Центральная, д. 7",
             FloorNumber = 1,
@@ -74,8 +74,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 5,
-            Type = ObjectType.Warehouse,
-            Purpose = ObjectPurpose.Industrial,
+            Type = RealEstateType.Warehouse,
+            Purpose = RealEstatePurpose.Industrial,
             CadastralNumber = "56:78:9012345:1",
             Address = "промзона, складской комплекс №5",
             FloorNumber = 1,
@@ -88,8 +88,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 6,
-            Type = ObjectType.Townhouse,
-            Purpose = ObjectPurpose.Residential,
+            Type = RealEstateType.Townhouse,
+            Purpose = RealEstatePurpose.Residential,
             CadastralNumber = "67:89:0123456:999999",
             Address = "ул. Парковая, д. 25",
             FloorNumber = 2,
@@ -102,8 +102,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 7,
-            Type = ObjectType.Shop,
-            Purpose = ObjectPurpose.Commercial,
+            Type = RealEstateType.Shop,
+            Purpose = RealEstatePurpose.Commercial,
             CadastralNumber = "78:90:1234567:88",
             Address = "ТЦ 'Европа', 1 этаж, пав. 12",
             FloorNumber = 1,
@@ -116,8 +116,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 8,
-            Type = ObjectType.Garage,
-            Purpose = ObjectPurpose.Commercial,
+            Type = RealEstateType.Garage,
+            Purpose = RealEstatePurpose.Commercial,
             CadastralNumber = "89:01:2345678:0",
             Address = "Гаражный кооператив 'Мотор', бокс 15",
             FloorNumber = 1,
@@ -130,8 +130,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 9,
-            Type = ObjectType.Apartment,
-            Purpose = ObjectPurpose.Residential,
+            Type = RealEstateType.Apartment,
+            Purpose = RealEstatePurpose.Residential,
             CadastralNumber = "90:12:3456789:123456789",
             Address = "пр. Победы, д. 112, кв. 89",
             FloorNumber = 9,
@@ -144,8 +144,8 @@ public class FixtureDataClass
         new RealEstate
         {
             Id = 10,
-            Type = ObjectType.Office,
-            Purpose = ObjectPurpose.Commercial,
+            Type = RealEstateType.Office,
+            Purpose = RealEstatePurpose.Commercial,
             CadastralNumber = "01:23:4567890:4567",
             Address = "Бизнес-центр 'Старт', оф. 405",
             FloorNumber = 4,
