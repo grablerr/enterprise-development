@@ -2,14 +2,32 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
+
+/// <summary>
+/// Application database context representing the relational database using Entity Framework Core.
+/// Defines DbSet properties for RealEstate, Counterparty, and Application entities.
+/// Configures entity mappings and relationships using Fluent API in OnModelCreating.
+/// </summary>
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
+    /// <summary>
+    /// RealEstates table representation.
+    /// </summary>
     public DbSet<RealEstate> RealEstates { get; set; }
 
+    /// <summary>
+    /// Counterparties table representation.
+    /// </summary>
     public DbSet<Counterparty> Counterparties { get; set; }
 
+    /// <summary>
+    /// Applications table representation.
+    /// </summary>
     public DbSet<Application> Applications { get; set; }
 
+    /// <summary>
+    /// Configures entity mappings, primary keys, property constraints, and relationships.
+    /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

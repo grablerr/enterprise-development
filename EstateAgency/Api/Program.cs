@@ -5,7 +5,10 @@ using Infrastructure.Persistence;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-
+/// <summary>
+/// Application setup for dependency injection, database context, services, repositories,
+/// middleware configuration, and API endpoints including Swagger support.
+/// </summary>
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();

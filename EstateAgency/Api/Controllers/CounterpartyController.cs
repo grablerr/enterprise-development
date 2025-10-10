@@ -3,18 +3,29 @@ using EstateAgency.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
+
+/// <summary>
+/// Controller for managing counterparties.
+/// </summary>
 [ApiController]
 [Route("api/counterparties")]
 public class CounterpartyController(ICounterpartyRepository counterpartyRepository) : ControllerBase
 {
+    /// <summary>
+    /// Retrieves all counterparties asynchronously.
+    /// </summary>
     [HttpGet("")]
     public async Task<IActionResult> GetAllConterparties()
     {
         var conterparties = await counterpartyRepository.GetAllAsync();
         return Ok(conterparties);
-
     }
 
+    /// <summary>
+    /// Retrieves a counterparty by ID.
+    /// Returns 404 if not found.
+    /// </summary>
+    /// <param name="id">Counterparty identifier</param>
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetCounterpartyById(int id)
     {
@@ -22,9 +33,13 @@ public class CounterpartyController(ICounterpartyRepository counterpartyReposito
         if (conterparty == null) return NotFound();
 
         return Ok(conterparty);
-
     }
 
+    /// <summary>
+    /// Deletes a counterparty by ID.
+    /// Returns 404 if not found.
+    /// </summary>
+    /// <param name="id">Counterparty identifier</param>
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteCounterpartyById(int id)
     {
@@ -35,6 +50,11 @@ public class CounterpartyController(ICounterpartyRepository counterpartyReposito
         return NoContent();
     }
 
+    /// <summary>
+    /// Creates a new counterparty.
+    /// Validates the input model.
+    /// </summary>
+    /// <param name="toCreate">Counterparty entity to create</param>
     [HttpPost("")]
     public async Task<IActionResult> CreateCounterparty([FromBody] Counterparty toCreate)
     {
@@ -44,6 +64,13 @@ public class CounterpartyController(ICounterpartyRepository counterpartyReposito
         return CreatedAtAction(nameof(GetCounterpartyById), new { id = toCreate.Id }, toCreate);
     }
 
+    /// <summary>
+    /// Updates an existing counterparty by ID.
+    /// Validates the input model.
+    /// Returns 404 if counterparty does not exist.
+    /// </summary>
+    /// <param name="id">Counterparty identifier</param>
+    /// <param name="upd">Updated counterparty entity</param>
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateCounterparty(int id, [FromBody] Counterparty upd)
     {

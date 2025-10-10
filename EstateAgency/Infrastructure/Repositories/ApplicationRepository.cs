@@ -5,8 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 
 namespace Infrastructure.Repositories;
+
+/// <summary>
+/// Repository implementation for managing Application entities using Entity Framework Core.
+/// Provides asynchronous methods to add, delete, retrieve, update, and check existence of Application entities.
+/// </summary>
 public class ApplicationRepository(AppDbContext context) : IApplicationRepository
 {
+    /// <summary>
+    /// Adds a new Application to the database asynchronously.
+    /// </summary>
+    /// <param name="application">Application entity to add</param>
     public async Task AddAsync(Application application)
     {
         if (application == null) throw new ArgumentNullException(nameof(application));
@@ -15,6 +24,11 @@ public class ApplicationRepository(AppDbContext context) : IApplicationRepositor
         await context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Deletes an Application by ID asynchronously.
+    /// Throws KeyNotFoundException if the entity does not exist.
+    /// </summary>
+    /// <param name="id">ID of the Application to delete</param>
     public async Task DeleteAsync(int id)
     {
         var application = await context.Applications.FindAsync(id);
@@ -24,15 +38,31 @@ public class ApplicationRepository(AppDbContext context) : IApplicationRepositor
         await context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Retrieves all Application entities asynchronously.
+    /// </summary>
     public async Task<IEnumerable<Application>> GetAllAsync() =>
         await context.Applications.ToListAsync();
 
+    /// <summary>
+    /// Retrieves an Application entity by ID asynchronously.
+    /// </summary>
+    /// <param name="id">ID of the Application to retrieve</param>
     public async Task<Application> GetByIdAsync(int id) =>
         await context.Applications.FindAsync(id);
 
+    /// <summary>
+    /// Checks if an Application entity exists by ID asynchronously.
+    /// </summary>
+    /// <param name="id">ID of the Application to check</param>
     public async Task<bool> IsExistsAsync(int id) =>
         await context.Applications.AnyAsync(a => a.Id == id);
 
+    /// <summary>
+    /// Updates an existing Application entity asynchronously.
+    /// Throws KeyNotFoundException if the entity does not exist.
+    /// </summary>
+    /// <param name="application">Application entity with updated data</param>
     public async Task UpdateAsync(Application application)
     {
         if (application == null) throw new ArgumentNullException(nameof(application));

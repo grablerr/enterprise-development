@@ -1,14 +1,19 @@
 ﻿using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
-
 
 namespace Api.Controllers;
+
+/// <summary>
+/// Controller for managing real estate entities.
+/// </summary>
 [ApiController]
 [Route("api/estates")]
 public class RealEstateController(IRealEstateRepository realEstateRepository) : ControllerBase
 {
+    /// <summary>
+    /// Retrieves all real estate records asynchronously.
+    /// </summary>
     [HttpGet("")]
     public async Task<IActionResult> GetAllRealEstates()
     {
@@ -17,6 +22,11 @@ public class RealEstateController(IRealEstateRepository realEstateRepository) : 
 
     }
 
+    /// <summary>
+    /// Retrieves a real estate record by ID.
+    /// Returns 404 if not found.
+    /// </summary>
+    /// <param name="id">Real estate ID</param>
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetRealEstateById(int id)
     {
@@ -26,6 +36,11 @@ public class RealEstateController(IRealEstateRepository realEstateRepository) : 
         return Ok(realEstate);
     }
 
+    /// <summary>
+    /// Deletes a real estate record by ID.
+    /// Returns 404 if record doesn't exist.
+    /// </summary>
+    /// <param name="id">Real estate ID</param>
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteRealEstateById(int id)
     {
@@ -36,6 +51,11 @@ public class RealEstateController(IRealEstateRepository realEstateRepository) : 
         return NoContent();
     }
 
+    /// <summary>
+    /// Creates a new real estate entry.
+    /// Validates the model state before adding.
+    /// </summary>
+    /// <param name="toCreate">Real estate entity</param>
     [HttpPost("")]
     public async Task<IActionResult> CreateRealEstate([FromBody] RealEstate toCreate)
     {
@@ -45,6 +65,13 @@ public class RealEstateController(IRealEstateRepository realEstateRepository) : 
         return CreatedAtAction(nameof(GetRealEstateById), new { id = toCreate.Id }, toCreate);
     }
 
+    /// <summary>
+    /// Updates an existing real estate record.
+    /// Validates input and checks if the record exists.
+    /// Returns 404 if not found.
+    /// </summary>
+    /// <param name="id">Real estate ID</param>
+    /// <param name="upd">Updated real estate data</param>
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateRealEstate(int id, [FromBody] RealEstate upd)
     {
