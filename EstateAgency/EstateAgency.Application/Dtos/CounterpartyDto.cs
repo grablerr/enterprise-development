@@ -6,6 +6,11 @@
 public class CounterpartyDto
 {
     /// <summary>
+    /// Unique identifier for the counterparty
+    /// </summary>
+    public int Id { get; set; }
+
+    /// <summary>
     /// Full name of the counterparty.
     /// </summary>
     public required string FullName { get; set; }

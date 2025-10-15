@@ -1,35 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EstateAgency.Domain.Entities;
+namespace EstateAgency.Application.Dtos;
 
-/// <summary>
-/// Represents a counterparty in the real estate agency system.
-/// Stores personal identification and contact information for individuals involved in transactions.
-/// </summary>
-public class Counterparty
+public class CounterpartyCreateDto
 {
     /// <summary>
-    /// Unique identifier for the counterparty
-    /// </summary>
-    public int Id { get; set; }
-
-    /// <summary>
-    /// Full legal name of the counterparty
+    /// Full name of the counterparty.
     /// </summary>
     [Required(ErrorMessage = "FullName is required")]
     [StringLength(100, ErrorMessage = "FullName cannot be longer than 100 characters")]
     public required string FullName { get; set; }
 
     /// <summary>
-    /// Official passport or identification document number
+    /// Passport number of the counterparty.
     /// </summary>
     [Required(ErrorMessage = "PassportNumber is required")]
     [StringLength(11, ErrorMessage = "PassportNumber cannot be longer than 11 characters")]
     public required string PassportNumber { get; set; }
 
     /// <summary>
-    /// Primary contact phone number for communication
+    /// Phone number of the counterparty.
     /// </summary>
+    ///     [Required(ErrorMessage = "PhoneNumber is required")]
     [Required(ErrorMessage = "PhoneNumber is required")]
     [StringLength(16, ErrorMessage = "PhoneNumber cannot be longer than 16 characters")]
     public required string PhoneNumber { get; set; }

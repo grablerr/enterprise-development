@@ -1,4 +1,5 @@
 ﻿using EstateAgency.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace EstateAgency.Domain.Entities;
 
@@ -11,26 +12,32 @@ public class RealEstate
     /// <summary>
     /// Unique identifier for the real estate object
     /// </summary>
-    public required int Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Classification type of the property
     /// </summary>
+    [Required(ErrorMessage = "Type is required")]
     public required RealEstateType Type { get; set; }
 
     /// <summary>
     /// Intended usage purpose of the property
     /// </summary>
+    [Required(ErrorMessage = "Purpose is required")]
     public required RealEstatePurpose Purpose { get; set; }
 
     /// <summary>
     /// Official cadastral registration number from the state registry
     /// </summary>
+    [Required(ErrorMessage = "CadastralNumber is required")]
+    [StringLength(64, ErrorMessage = "CadastralNumber cannot be longer than 64 characters")]
     public required string CadastralNumber { get; set; }
 
     /// <summary>
     /// Physical location address of the property
     /// </summary>
+    [Required(ErrorMessage = "Address is required")]
+    [StringLength(256, ErrorMessage = "Address cannot be longer than 256 characters")]
     public required string Address { get; set; }
 
     /// <summary>
@@ -46,6 +53,7 @@ public class RealEstate
     /// <summary>
     /// Total area of the property in square meters
     /// </summary>
+    [Required(ErrorMessage = "Square is required")]
     public required float Square { get; set; }
 
     /// <summary>

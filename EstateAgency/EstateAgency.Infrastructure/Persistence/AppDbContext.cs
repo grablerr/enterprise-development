@@ -41,16 +41,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .ValueGeneratedOnAdd();
 
             c.Property(c => c.FullName)
-                .IsRequired()
-                .HasMaxLength(100);
+                .IsRequired();
 
             c.Property(c => c.PassportNumber)
                 .IsRequired()
-                .HasMaxLength(32);
+                .HasMaxLength(11);
 
             c.Property(c => c.PhoneNumber)
                 .IsRequired()
-                .HasMaxLength(20);
+                .HasMaxLength(16);
         });
 
         modelBuilder.Entity<RealEstate>(r =>
@@ -102,12 +101,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             a.HasOne<Counterparty>()
                 .WithMany()
                 .HasForeignKey(a => a.CounterpartyId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             a.HasOne<RealEstate>()
                 .WithMany()
                 .HasForeignKey(a => a.RealEstateId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             a.Property(a => a.TransactionAmount)
                 .IsRequired()

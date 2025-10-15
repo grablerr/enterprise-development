@@ -23,7 +23,7 @@ public interface IRepository<T> where T : class
     /// <summary>
     /// Asynchronously get an entity by identifier.
     /// </summary>
-    public Task<T> GetByIdAsync(int id);
+    public Task<T?> GetByIdAsync(int id);
 
     /// <summary>
     /// Check if an entity exists by the specified identifier.

@@ -1,5 +1,4 @@
-﻿using EstateAgency.Domain.Entities;
-using EstateAgency.Test.Data;
+﻿using EstateAgency.Domain.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace EstateAgency.Infrastructure.Persistence;
@@ -16,7 +15,7 @@ public static class DbSeeder
     /// <param name="context">Application database context</param>
     public static async Task SeedAsync(AppDbContext context)
     {
-        var fixture = new FixtureDataClass();
+        var fixture = new DataSeeder();
 
         if (!await context.RealEstates.AnyAsync())
         {
@@ -48,6 +47,16 @@ public static class DbSeeder
     /// <returns>Maximum Id value or 0 if list is empty</returns>
     private static int GetMaxId<T>(List<T> list) where T : class
     {
-        return list.Count == 0 ? 0 : (int)typeof(T).GetProperty("Id")!.GetValue(list.MaxBy(x => (int)typeof(T).GetProperty("Id")!.GetValue(x)))!;
+        if (list.Count == 0)
+            return 0;
+
+        var idProperty = typeof(T).GetProperty("Id");
+        if (idProperty == null)
+            throw new InvalidOperationException("The type does not contain a property Id");
+
+        var maxItem = list.MaxBy(x => idProperty.GetValue(x) as int? ?? 0);
+        var maxValue = idProperty.GetValue(maxItem);
+
+        return maxValue is int id ? id : 0;
     }
 }

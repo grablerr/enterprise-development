@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace EstateAgency.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251007075344_InitialCreate")]
+    [Migration("20251015145609_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -73,13 +73,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("PassportNumber")
                         .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("varchar(32)");
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar(11)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasMaxLength(16)
+                        .HasColumnType("varchar(16)");
 
                     b.HasKey("Id");
 
@@ -140,13 +140,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("EstateAgency.Domain.Entities.Counterparty", null)
                         .WithMany()
                         .HasForeignKey("CounterpartyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EstateAgency.Domain.Entities.RealEstate", null)
                         .WithMany()
                         .HasForeignKey("RealEstateId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

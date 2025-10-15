@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EstateAgency.Domain\EstateAgency.Domain.csproj" />
-    <ProjectReference Include="..\EstateAgency.Test\EstateAgency.Test.csproj" />
   </ItemGroup>
 
 </Project>

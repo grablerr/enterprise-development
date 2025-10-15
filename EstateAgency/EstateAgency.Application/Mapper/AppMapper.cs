@@ -14,13 +14,10 @@ public class AppMapper : Profile
     /// </summary>
     public AppMapper()
     {
-        CreateMap<RealEstateDto, RealEstate>();
-        CreateMap<RealEstate, RealEstateDto>();
+        CreateMap<RealEstateDto, RealEstate>().ReverseMap();
 
-        CreateMap<CounterpartyDto, Counterparty>();
-        CreateMap<Counterparty, CounterpartyDto>();
+        CreateMap<CounterpartyDto, Counterparty>().ReverseMap();
 
-        CreateMap<ApplicationDto, EstateAgency.Domain.Entities.Application>();
-        CreateMap<EstateAgency.Domain.Entities.Application, ApplicationDto>();
+        CreateMap<ApplicationDto, EstateAgency.Domain.Entities.Application>().ReverseMap();
     }
 }

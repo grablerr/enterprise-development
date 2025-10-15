@@ -15,9 +15,9 @@ public class AnalyticsController(AnalyticsService analyticsService) : Controller
     /// Retrieves sellers grouped by period asynchronously.
     /// </summary>
     [HttpGet("sellers-by-period")]
-    public async Task<IActionResult> GetSellersByPeriod()
+    public async Task<IActionResult> GetSellersByPeriod([FromQuery] DateTime from, [FromQuery] DateTime to)
     {
-        var result = await analyticsService.GetSellersByPeriodAsync();
+        var result = await analyticsService.GetSellersByPeriodAsync(from, to);
         return Ok(result);
     }
 
@@ -28,10 +28,15 @@ public class AnalyticsController(AnalyticsService analyticsService) : Controller
     /// <param name="take">Number of top clients to return, default 5</param>
     [HttpGet("top-clients")]
     public async Task<IActionResult> GetTopClientsByRequests(
-        [FromQuery] ApplicationType type,
+        [FromQuery] string type,
         [FromQuery] int take = 5)
     {
-        var result = await analyticsService.GetTopClients5ByRequestsAsync(type, take);
+        if (!Enum.TryParse<ApplicationType>(type, true, out var appType))
+        {
+            return BadRequest($"Invalid ApplicationType: {type}");
+        }
+
+        var result = await analyticsService.GetTopClients5ByRequestsAsync(appType, take);
         return Ok(result);
     }
 
@@ -60,9 +65,14 @@ public class AnalyticsController(AnalyticsService analyticsService) : Controller
     /// </summary>
     /// <param name="type">Type of real estate</param>
     [HttpGet("buyers-by-estate-type")]
-    public async Task<IActionResult> GetClientsByEstateType([FromQuery] RealEstateType type)
+    public async Task<IActionResult> GetClientsByEstateType([FromQuery] string type)
     {
-        var result = await analyticsService.GetClientsByEstateTypeAsync(type);
+        if (!Enum.TryParse<RealEstateType>(type, true, out var estateType))
+        {
+            return BadRequest($"Invalid RealEstateType: {type}");
+        }
+
+        var result = await analyticsService.GetClientsByEstateTypeAsync(estateType);
         return Ok(result);
     }
 }

@@ -21,10 +21,8 @@ public class AnalyticsService(
     /// <summary>
     /// Retrieves sellers who have sold properties within a fixed period (May to June 2024).
     /// </summary>
-    public async Task<List<CounterpartyDto>> GetSellersByPeriodAsync()
+    public async Task<List<CounterpartyDto>> GetSellersByPeriodAsync(DateTime from, DateTime to)
     {
-        var from = new DateTime(2024, 5, 1);
-        var to = new DateTime(2024, 6, 30);
         var applications = await applicationRepository.GetAllAsync();
         var counterparties = await counterpartyRepository.GetAllAsync();
 
@@ -34,8 +32,7 @@ public class AnalyticsService(
                   a => a.CounterpartyId,
                   c => c.Id,
                   (a, c) => c)
-            .GroupBy(c => c.Id)
-            .Select(g => g.First())
+            .Distinct()
             .OrderBy(c => c.FullName)
             .ToList();
 
@@ -52,29 +49,26 @@ public class AnalyticsService(
         var applications = await applicationRepository.GetAllAsync();
         var counterparties = await counterpartyRepository.GetAllAsync();
 
-        var names = applications
+        var result = applications
             .Where(a => a.Type == type)
-            .Select(a => counterparties.FirstOrDefault(c => c.Id == a.CounterpartyId)?.FullName)
-            .Where(name => name != null)!
-            .Select(name => name!);
-
-        var grouped = names
-            .GroupBy(name => name)
-            .Select(g => new { Client = g.Key, Count = g.Count() })
-            .OrderByDescending(x => x.Count)
-            .ThenBy(x => x.Client)
+            .Join(
+                counterparties,
+                app => app.CounterpartyId,
+                cp => cp.Id,
+                (app, cp) => cp
+            )
+            .GroupBy(c => c.Id)
+            .Select(g => new CounterpartyDto
+            {
+                Id = g.Key,
+                FullName = g.First().FullName,
+                PassportNumber = g.First().PassportNumber,
+                PhoneNumber = g.First().PhoneNumber,
+                RequestCount = g.Count()
+            })
+            .OrderByDescending(c => c.RequestCount)
             .Take(take)
             .ToList();
-
-        var selectedCounterparties = counterparties
-            .Where(c => grouped.Any(g => g.Client == c.FullName))
-            .OrderByDescending(c => grouped.First(g => g.Client == c.FullName).Count)
-            .ThenBy(c => c.FullName)
-            .ToList();
-
-        var result = mapper.Map<List<CounterpartyDto>>(selectedCounterparties);
-        for (var i = 0; i < result.Count; i++)
-            result[i].RequestCount = grouped[i].Count;
 
         return result;
     }
@@ -82,36 +76,25 @@ public class AnalyticsService(
     /// <summary>
     /// Retrieves a list of real estate objects with their request counts.
     /// </summary>
-    public async Task<List<RealEstateDto>> GetRequestCountByObjectTypeAsync()
+    public async Task<List<RealEstateTypeRequestCountDto>> GetRequestCountByObjectTypeAsync()
     {
         var applications = await applicationRepository.GetAllAsync();
         var estates = await realEstateRepository.GetAllAsync();
 
-        var countsByEstateId = applications
-            .GroupBy(a => a.RealEstateId)
-            .ToDictionary(g => g.Key, g => g.Count());
+        var estateTypeById = estates.ToDictionary(e => e.Id, e => e.Type);
 
-        var estatesWithCounts = estates
-            .Where(e => countsByEstateId.ContainsKey(e.Id))
-            .OrderBy(e => e.Type)
-            .ThenBy(e => e.Address)
-            .Select(e => new RealEstateDto
+        var countsByType = applications
+            .Where(a => estateTypeById.ContainsKey(a.RealEstateId))
+            .GroupBy(a => estateTypeById[a.RealEstateId])
+            .Select(g => new RealEstateTypeRequestCountDto
             {
-                Type = e.Type,
-                Purpose = e.Purpose,
-                CadastralNumber = e.CadastralNumber,
-                Address = e.Address,
-                FloorNumber = e.FloorNumber,
-                Floors = e.Floors,
-                Square = e.Square,
-                Rooms = e.Rooms,
-                CeilingHeight = e.CeilingHeight,
-                IsEncumbrance = e.IsEncumbrance,
-                Count = countsByEstateId[e.Id]
+                RealEstateType = g.Key.ToString(),
+                Count = g.Count()
             })
+            .OrderBy(r => r.RealEstateType)
             .ToList();
 
-        return estatesWithCounts;
+        return countsByType;
     }
 
     /// <summary>

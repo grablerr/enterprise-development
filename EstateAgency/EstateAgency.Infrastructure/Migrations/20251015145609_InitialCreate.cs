@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace EstateAgency.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -23,9 +23,9 @@ namespace Infrastructure.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FullName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PassportNumber = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: false)
+                    PassportNumber = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumber = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                    PhoneNumber = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -82,13 +82,13 @@ namespace Infrastructure.Migrations
                         column: x => x.CounterpartyId,
                         principalTable: "Counterparties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Applications_RealEstates_RealEstateId",
                         column: x => x.RealEstateId,
                         principalTable: "RealEstates",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

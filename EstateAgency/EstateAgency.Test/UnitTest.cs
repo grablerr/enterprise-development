@@ -1,5 +1,5 @@
 using EstateAgency.Domain.Enums;
-using EstateAgency.Test.Data;
+using EstateAgency.Domain.Data;
 
 namespace EstateAgency.Test;
 
@@ -8,7 +8,7 @@ namespace EstateAgency.Test;
 /// Tests cover sales analytics, client ranking, property statistics, and financial analysis.
 /// Uses FixtureDataClass as a shared test data fixture for consistent data across all tests.
 /// </summary>
-public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureDataClass>
+public class QueriesTests(DataSeeder testData) : IClassFixture<DataSeeder>
 {
 
     /// <summary>
@@ -154,5 +154,4 @@ public class QueriesTests(FixtureDataClass testData) : IClassFixture<FixtureData
 
         Assert.Equal(expectedClients, clients);
     }
-
 }

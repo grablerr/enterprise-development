@@ -17,8 +17,6 @@ public class ApplicationRepository(AppDbContext context) : IRepository<Applicati
     /// <param name="application">Application entity to add</param>
     public async Task AddAsync(Application application)
     {
-        if (application == null) throw new ArgumentNullException(nameof(application));
-
         await context.Applications.AddAsync(application);
         await context.SaveChangesAsync();
     }
@@ -30,8 +28,7 @@ public class ApplicationRepository(AppDbContext context) : IRepository<Applicati
     /// <param name="id">ID of the Application to delete</param>
     public async Task DeleteAsync(int id)
     {
-        var application = await context.Applications.FindAsync(id);
-        if (application == null) throw new KeyNotFoundException($"Estate with Id {id} not found.");
+        var application = await context.Applications.FindAsync(id) ?? throw new KeyNotFoundException($"Estate with Id {id} not found.");
 
         context.Applications.Remove(application);
         await context.SaveChangesAsync();
@@ -47,7 +44,7 @@ public class ApplicationRepository(AppDbContext context) : IRepository<Applicati
     /// Retrieves an Application entity by ID asynchronously.
     /// </summary>
     /// <param name="id">ID of the Application to retrieve</param>
-    public async Task<Application> GetByIdAsync(int id) =>
+    public async Task<Application?> GetByIdAsync(int id) =>
         await context.Applications.FindAsync(id);
 
     /// <summary>
@@ -64,9 +61,7 @@ public class ApplicationRepository(AppDbContext context) : IRepository<Applicati
     /// <param name="application">Application entity with updated data</param>
     public async Task UpdateAsync(Application application)
     {
-        if (application == null) throw new ArgumentNullException(nameof(application));
-        var toUpdate = await context.Applications.FindAsync(application.Id);
-        if (toUpdate == null) throw new KeyNotFoundException($"Estate with Id {application.Id} not found.");
+        var toUpdate = await context.Applications.FindAsync(application.Id) ?? throw new KeyNotFoundException($"Estate with Id {application.Id} not found.");
 
         toUpdate.CounterpartyId = application.CounterpartyId;
         toUpdate.RealEstateId = application.RealEstateId;

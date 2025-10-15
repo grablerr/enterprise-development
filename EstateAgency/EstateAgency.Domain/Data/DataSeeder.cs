@@ -1,14 +1,14 @@
 ﻿using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Enums;
 
-namespace EstateAgency.Test.Data;
+namespace EstateAgency.Domain.Data;
 
 /// <summary>
 /// Provides comprehensive test data fixture for Estate Agency domain entities.
 /// Contains pre-populated collections of real estate objects, counterparties, and applications
 /// for use in unit testing and development scenarios.
 /// </summary>
-public class FixtureDataClass
+public class DataSeeder
 {
     /// <summary>
     /// Collection of 10 diverse real estate objects representing various property types and purposes.
