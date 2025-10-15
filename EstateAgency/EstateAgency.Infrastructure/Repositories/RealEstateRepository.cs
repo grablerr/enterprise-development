@@ -1,15 +1,15 @@
 ﻿using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
-using Infrastructure.Persistence;
+using EstateAgency.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories;
+namespace EstateAgency.Infrastructure.Repositories;
 
 /// <summary>
 /// Repository implementation for managing RealEstate entities using Entity Framework Core.
 /// Supports asynchronous CRUD operations to add, delete, retrieve, update, and check existence.
 /// </summary>
-public class RealEstateRepository(AppDbContext context) : IRealEstateRepository
+public class RealEstateRepository(AppDbContext context) : IRepository<RealEstate>
 {
     /// <summary>
     /// Adds a new RealEstate entity asynchronously.

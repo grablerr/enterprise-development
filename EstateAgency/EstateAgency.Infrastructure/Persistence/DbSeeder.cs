@@ -2,7 +2,7 @@
 using EstateAgency.Test.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence;
+namespace EstateAgency.Infrastructure.Persistence;
 
 /// <summary>
 /// Seeds the database with initial test data if the respective tables are empty.

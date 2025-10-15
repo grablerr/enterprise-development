@@ -1,9 +1,10 @@
-﻿using Application.Dtos;
+﻿using EstateAgency.Application.Dtos;
 using AutoMapper;
 using EstateAgency.Domain.Enums;
 using EstateAgency.Domain.Interfaces;
+using EstateAgency.Domain.Entities;
 
-namespace Application.AnalyticService;
+namespace EstateAgency.Application.AnalyticService;
 
 /// <summary>
 /// Provides analytic data service methods related to real estate applications,
@@ -11,9 +12,9 @@ namespace Application.AnalyticService;
 /// Utilizes repositories to fetch and process data, and AutoMapper to transform entities to DTOs.
 /// </summary>
 public class AnalyticsService(
-    IApplicationRepository applicationRepository,
-    ICounterpartyRepository counterpartyRepository,
-    IRealEstateRepository realEstateRepository,
+    IRepository<EstateAgency.Domain.Entities.Application> applicationRepository,
+    IRepository<Counterparty> counterpartyRepository,
+    IRepository<RealEstate> realEstateRepository,
     IMapper mapper
 )
 {

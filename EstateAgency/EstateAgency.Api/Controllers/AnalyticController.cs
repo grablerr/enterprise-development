@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Application.AnalyticService;
+using EstateAgency.Application.AnalyticService;
 using EstateAgency.Domain.Enums;
 
-namespace Api.Controllers;
+namespace EstateAgency.Api.Controllers;
 
 /// <summary>
 /// API controller that exposes endpoints for analytic data retrieval.
@@ -54,11 +54,11 @@ public class AnalyticsController(AnalyticsService analyticsService) : Controller
         var result = await analyticsService.GetClientsWithMinPriceRequestsAsync();
         return Ok(result);
     }
-    
+
     /// <summary>
     /// Retrieves clients grouped by selected estate type.
     /// </summary>
-    /// <param name="type">Type of real estate</param
+    /// <param name="type">Type of real estate</param>
     [HttpGet("buyers-by-estate-type")]
     public async Task<IActionResult> GetClientsByEstateType([FromQuery] RealEstateType type)
     {

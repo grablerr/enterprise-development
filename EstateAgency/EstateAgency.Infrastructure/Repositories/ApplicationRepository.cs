@@ -1,16 +1,15 @@
 ﻿using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
-using Infrastructure.Persistence;
+using EstateAgency.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-
-namespace Infrastructure.Repositories;
+namespace EstateAgency.Infrastructure.Repositories;
 
 /// <summary>
 /// Repository implementation for managing Application entities using Entity Framework Core.
 /// Provides asynchronous methods to add, delete, retrieve, update, and check existence of Application entities.
 /// </summary>
-public class ApplicationRepository(AppDbContext context) : IApplicationRepository
+public class ApplicationRepository(AppDbContext context) : IRepository<Application>
 {
     /// <summary>
     /// Adds a new Application to the database asynchronously.

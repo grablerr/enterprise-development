@@ -1,6 +1,6 @@
 ﻿using EstateAgency.Domain.Enums;
 
-namespace Application.Dtos;
+namespace EstateAgency.Application.Dtos;
 /// <summary>
 /// Represents a real estate transaction application.
 /// </summary>

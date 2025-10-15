@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api\Api.csproj" />
+    <ProjectReference Include="..\EstateAgency.Api\EstateAgency.Api.csproj" />
   </ItemGroup>
 
 </Project>

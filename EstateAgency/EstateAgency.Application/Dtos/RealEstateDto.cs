@@ -1,6 +1,6 @@
 ﻿using EstateAgency.Domain.Enums;
 
-namespace Application.Dtos;
+namespace EstateAgency.Application.Dtos;
 
 /// <summary>
 /// Data Transfer Object representing a real estate entity with detailed attributes.

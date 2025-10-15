@@ -2,14 +2,14 @@
 using EstateAgency.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers;
+namespace EstateAgency.Api.Controllers;
 
 /// <summary>
 /// Controller for managing counterparties.
 /// </summary>
 [ApiController]
 [Route("api/counterparties")]
-public class CounterpartyController(ICounterpartyRepository counterpartyRepository) : ControllerBase
+public class CounterpartyController(IRepository<Counterparty> counterpartyRepository) : ControllerBase
 {
     /// <summary>
     /// Retrieves all counterparties asynchronously.

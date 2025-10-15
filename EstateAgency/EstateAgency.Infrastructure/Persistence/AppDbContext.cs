@@ -1,7 +1,7 @@
 ﻿using EstateAgency.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence;
+namespace EstateAgency.Infrastructure.Persistence;
 
 /// <summary>
 /// Application database context representing the relational database using Entity Framework Core.

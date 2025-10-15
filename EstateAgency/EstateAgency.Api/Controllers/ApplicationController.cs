@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using EstateAgency.Domain.Interfaces;
-
-namespace Api.Controllers;
+using EstateAgency.Domain.Entities;
+namespace EstateAgency.Api.Controllers;
 
 /// <summary>
 /// Controller for managing real estate applications.
@@ -9,9 +9,10 @@ namespace Api.Controllers;
 [ApiController]
 [Route("api/applications")]
 public class ApplicationController(
-    IApplicationRepository applicationRepository,
-    IRealEstateRepository realEstateRepository,
-    ICounterpartyRepository counterpartyRepository) : ControllerBase
+    IRepository<EstateAgency.Domain.Entities.Application> applicationRepository,
+    IRepository<RealEstate> realEstateRepository,
+    IRepository<Counterparty> counterpartyRepository) : ControllerBase
+
 {
     /// <summary>
     /// Retrieves all applications asynchronously.

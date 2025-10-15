@@ -2,14 +2,14 @@
 using EstateAgency.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers;
+namespace EstateAgency.Api.Controllers;
 
 /// <summary>
 /// Controller for managing real estate entities.
 /// </summary>
 [ApiController]
 [Route("api/estates")]
-public class RealEstateController(IRealEstateRepository realEstateRepository) : ControllerBase
+public class RealEstateController(IRepository<RealEstate> realEstateRepository) : ControllerBase
 {
     /// <summary>
     /// Retrieves all real estate records asynchronously.

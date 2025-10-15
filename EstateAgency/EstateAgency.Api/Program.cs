@@ -1,9 +1,11 @@
-using Application.AnalyticService;
-using Application.Mapper;
+using EstateAgency.Application.AnalyticService;
+using EstateAgency.Application.Mapper;
+using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
-using Infrastructure.Persistence;
-using Infrastructure.Repositories;
+using EstateAgency.Infrastructure.Persistence;
+using EstateAgency.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 /// <summary>
 /// Application setup for dependency injection, database context, services, repositories,
@@ -17,15 +19,20 @@ builder.AddMySqlDbContext<AppDbContext>(connectionName: "DefaultConnection");
 
 builder.Services.AddAutoMapper(typeof(AppMapper).Assembly);
 
-builder.Services.AddScoped<ICounterpartyRepository, CounterpartyRepository>();
-builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
-builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
+builder.Services.AddScoped<IRepository<Counterparty>, CounterpartyRepository>();
+builder.Services.AddScoped<IRepository<RealEstate>, RealEstateRepository>();
+builder.Services.AddScoped<IRepository<Application>, ApplicationRepository>();
 
 builder.Services.AddScoped<AnalyticsService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
 
 var app = builder.Build();
 

@@ -1,15 +1,15 @@
 ﻿using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
-using Infrastructure.Persistence;
+using EstateAgency.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories;
+namespace EstateAgency.Infrastructure.Repositories;
 
 /// <summary>
 /// Repository implementation for managing Counterparty entities using Entity Framework Core.
 /// Provides asynchronous CRUD operations to add, delete, retrieve, update and check existence of Counterparty entities.
 /// </summary>
-public class CounterpartyRepository(AppDbContext context) : ICounterpartyRepository
+public class CounterpartyRepository(AppDbContext context) : IRepository<Counterparty>
 {
     /// <summary>
     /// Adds a new Counterparty entity asynchronously.

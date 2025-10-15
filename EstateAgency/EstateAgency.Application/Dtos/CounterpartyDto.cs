@@ -1,4 +1,4 @@
-﻿namespace Application.Dtos;
+﻿namespace EstateAgency.Application.Dtos;
 
 /// <summary>
 /// Data Transfer Object representing a counterparty.

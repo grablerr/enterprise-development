@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.Domain", "Esta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.Test", "EstateAgency.Test\EstateAgency.Test.csproj", "{DA776BBE-A2B0-4822-B0D6-066690003824}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{B7B0A007-625D-4A37-BA6F-1AC672D8A843}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.Infrastructure", "EstateAgency.Infrastructure\EstateAgency.Infrastructure.csproj", "{B7B0A007-625D-4A37-BA6F-1AC672D8A843}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8A48C6FE-5077-46E1-A44A-7EA9AF0C072E} = {8A48C6FE-5077-46E1-A44A-7EA9AF0C072E}
 		{DA776BBE-A2B0-4822-B0D6-066690003824} = {DA776BBE-A2B0-4822-B0D6-066690003824}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.Api", "EstateAgency.Api\EstateAgency.Api.csproj", "{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8A48C6FE-5077-46E1-A44A-7EA9AF0C072E} = {8A48C6FE-5077-46E1-A44A-7EA9AF0C072E}
 		{B7B0A007-625D-4A37-BA6F-1AC672D8A843} = {B7B0A007-625D-4A37-BA6F-1AC672D8A843}
@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.AppHost", "Est
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.ServiceDefaults", "EstateAgency.ServiceDefaults\EstateAgency.ServiceDefaults.csproj", "{537E4AFC-C12D-862A-4887-FDA46A35C012}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{4A4863E8-EB9F-4D55-A1E6-58ABF84B4CCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstateAgency.Application", "EstateAgency.Application\EstateAgency.Application.csproj", "{4A4863E8-EB9F-4D55-A1E6-58ABF84B4CCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
