@@ -50,9 +50,7 @@ public static class DbSeeder
         if (list.Count == 0)
             return 0;
 
-        var idProperty = typeof(T).GetProperty("Id");
-        if (idProperty == null)
-            throw new InvalidOperationException("The type does not contain a property Id");
+        var idProperty = typeof(T).GetProperty("Id") ?? throw new InvalidOperationException("The type does not contain a property Id");
 
         var maxItem = list.MaxBy(x => idProperty.GetValue(x) as int? ?? 0);
         var maxValue = idProperty.GetValue(maxItem);

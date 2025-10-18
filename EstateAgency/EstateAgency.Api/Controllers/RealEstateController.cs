@@ -1,8 +1,10 @@
-﻿using EstateAgency.Application.Dtos;
+﻿using AutoMapper;
+using EstateAgency.Application.Dtos;
 using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Enums;
 using EstateAgency.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace EstateAgency.Api.Controllers;
 
@@ -11,7 +13,9 @@ namespace EstateAgency.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/real-estates")]
-public class RealEstateController(IRepository<RealEstate> realEstateRepository) : ControllerBase
+public class RealEstateController(
+    IRepository<RealEstate> realEstateRepository,
+    IMapper mapper) : ControllerBase
 {
     /// <summary>
     /// Retrieves all real estate records asynchronously.
@@ -21,24 +25,13 @@ public class RealEstateController(IRepository<RealEstate> realEstateRepository) 
     {
         var realEstates = await realEstateRepository.GetAllAsync();
 
-        var dtoList = realEstates.Select(e => new RealEstateDto
-        {
-            Id = e.Id,
-            Type = e.Type.ToString(),
-            Purpose = e.Purpose.ToString(),
-            CadastralNumber = e.CadastralNumber,
-            Address = e.Address,
-            FloorNumber = e.FloorNumber,
-            Floors = e.Floors,
-            Square = e.Square,
-            Rooms = e.Rooms,
-            CeilingHeight = e.CeilingHeight,
-            IsEncumbrance = e.IsEncumbrance,
-        }).ToList();
+        var dtoList = mapper.Map<IEnumerable<RealEstateDto>>(realEstates);
+
+        if (dtoList == null || !dtoList.Any())
+            return NotFound("No real estates found.");
 
         return Ok(dtoList);
     }
-
 
     /// <summary>
     /// Retrieves a real estate record by ID. Returns 404 if not found.
@@ -50,20 +43,7 @@ public class RealEstateController(IRepository<RealEstate> realEstateRepository) 
         var realEstate = await realEstateRepository.GetByIdAsync(id);
         if (realEstate == null) return NotFound();
 
-        var dto = new RealEstateDto
-        {
-            Id = realEstate.Id,
-            Type = realEstate.Type.ToString(),
-            Purpose = realEstate.Purpose.ToString(),
-            CadastralNumber = realEstate.CadastralNumber,
-            Address = realEstate.Address,
-            FloorNumber = realEstate.FloorNumber,
-            Floors = realEstate.Floors,
-            Square = realEstate.Square,
-            Rooms = realEstate.Rooms,
-            CeilingHeight = realEstate.CeilingHeight,
-            IsEncumbrance = realEstate.IsEncumbrance,
-        };
+        var dto = mapper.Map<RealEstateDto>(realEstate);
 
         return Ok(dto);
     }
@@ -87,32 +67,33 @@ public class RealEstateController(IRepository<RealEstate> realEstateRepository) 
     /// </summary>
     /// <param name="toCreateDto">Real estate entity</param>
     [HttpPost]
-    public async Task<ActionResult<RealEstate>> CreateRealEstate([FromBody] RealEstateCreateDto toCreateDto)
+    public async Task<ActionResult<RealEstateDto>> CreateRealEstate([FromBody] RealEstateCreateDto toCreateDto)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
         if (!Enum.TryParse<RealEstateType>(toCreateDto.Type, true, out var typeEnum))
-            return BadRequest($"Invalid RealEstateType value: {toCreateDto.Type}");
+        {
+            var validTypes = string.Join(", ", Enum.GetNames(typeof(RealEstateType)));
+            return BadRequest($"Invalid RealEstateType: {toCreateDto.Type}. Valid values are: {validTypes}");
+        }
+        ;
 
         if (!Enum.TryParse<RealEstatePurpose>(toCreateDto.Purpose, true, out var purposeEnum))
-            return BadRequest($"Invalid RealEstatePurpose value: {toCreateDto.Purpose}");
-
-        var realEstate = new RealEstate
         {
-            Type = typeEnum,
-            Purpose = purposeEnum,
-            CadastralNumber = toCreateDto.CadastralNumber,
-            Address = toCreateDto.Address,
-            FloorNumber = toCreateDto.FloorNumber,
-            Floors = toCreateDto.Floors,
-            Square = toCreateDto.Square,
-            Rooms = toCreateDto.Rooms,
-            CeilingHeight = toCreateDto.CeilingHeight,
-            IsEncumbrance = toCreateDto.IsEncumbrance,
-        };
+            var validPurposes = string.Join(", ", Enum.GetNames(typeof(RealEstatePurpose)));
+            return BadRequest($"Invalid RealEstatePurpose: {toCreateDto.Purpose}. Valid values are: {validPurposes}");
+        }
+        ;
+
+        var realEstate = mapper.Map<RealEstate>(toCreateDto);
+        realEstate.Type = typeEnum;
+        realEstate.Purpose = purposeEnum;
 
         await realEstateRepository.AddAsync(realEstate);
-        return CreatedAtAction(nameof(GetRealEstateById), new { id = realEstate.Id }, realEstate);
+
+        var dto = mapper.Map<RealEstateDto>(realEstate);
+        return CreatedAtAction(nameof(GetRealEstateById), new { id = realEstate.Id }, dto);
     }
 
     /// <summary>
@@ -123,31 +104,32 @@ public class RealEstateController(IRepository<RealEstate> realEstateRepository) 
     [HttpPut("{id:int}")]
     public async Task<ActionResult> UpdateRealEstate(int id, [FromBody] RealEstateCreateDto updDto)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
         var old = await realEstateRepository.GetByIdAsync(id);
-        if (old == null) return NotFound();
+        if (old == null)
+            return NotFound();
 
         if (!Enum.TryParse<RealEstateType>(updDto.Type, true, out var typeEnum))
-            return BadRequest($"Invalid RealEstateType: {updDto.Type}");
+        {
+            var validTypes = string.Join(", ", Enum.GetNames(typeof(RealEstateType)));
+            return BadRequest($"Invalid RealEstateType: {updDto.Type}. Valid values are: {validTypes}");
+        };
 
         if (!Enum.TryParse<RealEstatePurpose>(updDto.Purpose, true, out var purposeEnum))
-            return BadRequest($"Invalid RealEstatePurpose: {updDto.Purpose}");
+        {
+            var validPurposes = string.Join(", ", Enum.GetNames(typeof(RealEstatePurpose)));
+            return BadRequest($"Invalid RealEstatePurpose: {updDto.Purpose}. Valid values are: {validPurposes}");
+        };
 
+
+        mapper.Map(updDto, old);
         old.Type = typeEnum;
         old.Purpose = purposeEnum;
-        old.CadastralNumber = updDto.CadastralNumber;
-        old.Address = updDto.Address;
-        old.FloorNumber = updDto.FloorNumber;
-        old.Floors = updDto.Floors;
-        old.Square = updDto.Square;
-        old.Rooms = updDto.Rooms;
-        old.CeilingHeight = updDto.CeilingHeight;
-        old.IsEncumbrance = updDto.IsEncumbrance;
 
         await realEstateRepository.UpdateAsync(old);
 
         return NoContent();
     }
-
 }

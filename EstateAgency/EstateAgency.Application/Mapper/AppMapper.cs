@@ -18,6 +18,12 @@ public class AppMapper : Profile
 
         CreateMap<CounterpartyDto, Counterparty>().ReverseMap();
 
-        CreateMap<ApplicationDto, EstateAgency.Domain.Entities.Application>().ReverseMap();
+        CreateMap<ApplicationDto, Domain.Entities.Application>().ReverseMap();
+
+        CreateMap<ApplicationCreateDto, Domain.Entities.Application>().ReverseMap();
+
+        CreateMap<CounterpartyCreateDto, Counterparty>().ReverseMap();
+
+        CreateMap<RealEstateCreateDto, RealEstate>().ReverseMap();
     }
 }

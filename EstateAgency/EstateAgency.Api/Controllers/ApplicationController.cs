@@ -1,7 +1,9 @@
-﻿using EstateAgency.Application.Dtos;
+﻿using AutoMapper;
+using EstateAgency.Application.Dtos;
 using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Enums;
 using EstateAgency.Domain.Interfaces;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace EstateAgency.Api.Controllers;
@@ -12,9 +14,10 @@ namespace EstateAgency.Api.Controllers;
 [ApiController]
 [Route("api/applications")]
 public class ApplicationController(
-    IRepository<EstateAgency.Domain.Entities.Application> applicationRepository,
+    IRepository<Domain.Entities.Application> applicationRepository,
     IRepository<RealEstate> realEstateRepository,
-    IRepository<Counterparty> counterpartyRepository) : ControllerBase
+    IRepository<Counterparty> counterpartyRepository,
+    IMapper mapper) : ControllerBase
 {
     /// <summary>
     /// Retrieves all applications asynchronously.
@@ -23,16 +26,10 @@ public class ApplicationController(
     public async Task<ActionResult<IEnumerable<ApplicationDto>>> GetAllApplications()
     {
         var applications = await applicationRepository.GetAllAsync();
+        var dtoList = mapper.Map<IEnumerable<ApplicationDto>>(applications);
 
-        var dtoList = applications.Select(a => new ApplicationDto
-        {
-            Id = a.Id,
-            CounterpartyId = a.CounterpartyId,
-            RealEstateId = a.RealEstateId,
-            TransactionAmount = a.TransactionAmount,
-            Type = a.Type.ToString(),
-            Date = a.Date
-        }).ToList();
+        if (dtoList == null || !dtoList.Any())
+            return NotFound("No applications found.");
 
         return Ok(dtoList);
     }
@@ -54,15 +51,7 @@ public class ApplicationController(
         if (realEstate == null || counterparty == null)
             return Conflict("realEstate or Counterparty not found");
 
-        var dto = new ApplicationDto
-        {
-            Id = application.Id,
-            CounterpartyId = application.CounterpartyId,
-            RealEstateId = application.RealEstateId,
-            TransactionAmount = application.TransactionAmount,
-            Type = application.Type.ToString(),
-            Date = application.Date
-        };
+        var dto = mapper.Map<ApplicationDto>(application);
 
         return Ok(dto);
     }
@@ -86,29 +75,27 @@ public class ApplicationController(
     /// </summary>
     /// <param name="toCreateDto">Application entity to create</param>
     [HttpPost]
-    public async Task<ActionResult<EstateAgency.Domain.Entities.Application>> CreateApplication([FromBody] ApplicationCreateDto toCreateDto)
+    public async Task<ActionResult<ApplicationDto>> CreateApplication([FromBody] ApplicationCreateDto toCreateDto)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
         var isRealEstateExists = await realEstateRepository.IsExistsAsync(toCreateDto.RealEstateId);
         var isCounterpartyExists = await counterpartyRepository.IsExistsAsync(toCreateDto.CounterpartyId);
-        if (!isRealEstateExists || !isCounterpartyExists) return NotFound();
+        if (!isRealEstateExists || !isCounterpartyExists)
+            return NotFound();
 
         if (!Enum.TryParse<ApplicationType>(toCreateDto.Type, true, out var typeEnum))
             return BadRequest($"Invalid ApplicationType: {toCreateDto.Type}");
 
-        var application = new EstateAgency.Domain.Entities.Application
-        {
-            CounterpartyId = toCreateDto.CounterpartyId,
-            RealEstateId = toCreateDto.RealEstateId,
-            TransactionAmount = toCreateDto.TransactionAmount,
-            Type = typeEnum,
-            Date = toCreateDto.Date
-        };
+        var application = mapper.Map<Domain.Entities.Application>(toCreateDto);
+        application.Type = typeEnum;
 
         await applicationRepository.AddAsync(application);
 
-        return CreatedAtAction(nameof(GetApplicationById), new { id = application.Id }, application);
+        var dto = mapper.Map<ApplicationDto>(application);
+
+        return CreatedAtAction(nameof(GetApplicationById), new { id = application.Id }, dto);
     }
 
     /// <summary>
@@ -120,7 +107,8 @@ public class ApplicationController(
     [HttpPut("{id:int}")]
     public async Task<ActionResult> UpdateApplication(int id, [FromBody] ApplicationCreateDto updDto)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
         if (!Enum.TryParse<ApplicationType>(updDto.Type, true, out var typeEnum))
             return BadRequest($"Invalid ApplicationType: {updDto.Type}");
@@ -128,16 +116,15 @@ public class ApplicationController(
         var isRealEstateExists = await realEstateRepository.IsExistsAsync(updDto.RealEstateId);
         var isCounterpartyExists = await counterpartyRepository.IsExistsAsync(updDto.CounterpartyId);
 
-        if (!isRealEstateExists || !isCounterpartyExists) return NotFound();
+        if (!isRealEstateExists || !isCounterpartyExists)
+            return NotFound();
 
         var old = await applicationRepository.GetByIdAsync(id);
-        if (old == null) return NotFound();
+        if (old == null)
+            return NotFound();
 
-        old.CounterpartyId = updDto.CounterpartyId;
-        old.RealEstateId = updDto.RealEstateId;
-        old.TransactionAmount = updDto.TransactionAmount;
+        mapper.Map(updDto, old);
         old.Type = typeEnum;
-        old.Date = updDto.Date;
 
         await applicationRepository.UpdateAsync(old);
 

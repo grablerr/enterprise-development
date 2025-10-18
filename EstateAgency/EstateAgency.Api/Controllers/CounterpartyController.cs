@@ -1,4 +1,5 @@
-﻿using EstateAgency.Application.Dtos;
+﻿using AutoMapper;
+using EstateAgency.Application.Dtos;
 using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,9 @@ namespace EstateAgency.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/counterparties")]
-public class CounterpartyController(IRepository<Counterparty> counterpartyRepository) : ControllerBase
+public class CounterpartyController(
+    IRepository<Counterparty> counterpartyRepository,
+    IMapper mapper) : ControllerBase
 {
     /// <summary>
     /// Retrieves all counterparties asynchronously.
@@ -58,12 +61,7 @@ public class CounterpartyController(IRepository<Counterparty> counterpartyReposi
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        var counterparty = new Counterparty
-        {
-            FullName = toCreateDto.FullName,
-            PassportNumber = toCreateDto.PassportNumber,
-            PhoneNumber = toCreateDto.PhoneNumber,
-        };
+        var counterparty = mapper.Map<Counterparty>(toCreateDto);
 
         await counterpartyRepository.AddAsync(counterparty);
         return CreatedAtAction(nameof(GetCounterpartyById), new { id = counterparty.Id }, counterparty);
@@ -78,14 +76,15 @@ public class CounterpartyController(IRepository<Counterparty> counterpartyReposi
     [HttpPut("{id:int}")]
     public async Task<ActionResult> UpdateCounterparty(int id, [FromBody] CounterpartyCreateDto upd)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
         var old = await counterpartyRepository.GetByIdAsync(id);
-        if (old == null) return NotFound();
+        if (old == null)
+            return NotFound();
 
-        old.FullName = upd.FullName;
-        old.PassportNumber = upd.PassportNumber;
-        old.PhoneNumber = upd.PhoneNumber;
+        mapper.Map(upd, old);
+
         await counterpartyRepository.UpdateAsync(old);
 
         return NoContent();

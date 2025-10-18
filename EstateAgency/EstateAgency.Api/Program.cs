@@ -5,12 +5,7 @@ using EstateAgency.Domain.Interfaces;
 using EstateAgency.Infrastructure.Persistence;
 using EstateAgency.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
-/// <summary>
-/// Application setup for dependency injection, database context, services, repositories,
-/// middleware configuration, and API endpoints including Swagger support.
-/// </summary>
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -29,9 +24,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
+    var xmlFiles = Directory.GetFiles(AppContext.BaseDirectory, "*.xml");
+    foreach (var xmlFile in xmlFiles)
+        c.IncludeXmlComments(xmlFile);
 });
 
 var app = builder.Build();

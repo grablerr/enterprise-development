@@ -59,9 +59,4 @@ public class RealEstateDto
     /// Indicates if there are any legal encumbrances affecting the property.
     /// </summary>
     public required bool IsEncumbrance { get; set; }
-
-    /// <summary>
-    /// Optional count of related requests or transactions.
-    /// </summary>
-    public int? Count { get; init; }
 }

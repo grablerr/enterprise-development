@@ -12,7 +12,7 @@ namespace EstateAgency.Application.AnalyticService;
 /// Utilizes repositories to fetch and process data, and AutoMapper to transform entities to DTOs.
 /// </summary>
 public class AnalyticsService(
-    IRepository<EstateAgency.Domain.Entities.Application> applicationRepository,
+    IRepository<Domain.Entities.Application> applicationRepository,
     IRepository<Counterparty> counterpartyRepository,
     IRepository<RealEstate> realEstateRepository,
     IMapper mapper
@@ -44,7 +44,7 @@ public class AnalyticsService(
     /// </summary>
     /// <param name="type">Type of application request</param>
     /// <param name="take">Number of top clients to return, default is 5</param>
-    public async Task<List<CounterpartyDto>> GetTopClients5ByRequestsAsync(ApplicationType type, int take = 5)
+    public async Task<List<RequestCountDto>> GetTopClients5ByRequestsAsync(ApplicationType type, int take = 5)
     {
         var applications = await applicationRepository.GetAllAsync();
         var counterparties = await counterpartyRepository.GetAllAsync();
@@ -58,7 +58,7 @@ public class AnalyticsService(
                 (app, cp) => cp
             )
             .GroupBy(c => c.Id)
-            .Select(g => new CounterpartyDto
+            .Select(g => new RequestCountDto
             {
                 Id = g.Key,
                 FullName = g.First().FullName,
@@ -100,7 +100,7 @@ public class AnalyticsService(
     /// <summary>
     /// Retrieves clients who made requests with the minimum transaction amount.
     /// </summary>
-    public async Task<List<CounterpartyDto>> GetClientsWithMinPriceRequestsAsync()
+    public async Task<ClientsWithMinPriceDto> GetClientsWithMinPriceRequestsAsync()
     {
         var applications = await applicationRepository.GetAllAsync();
         var counterparties = await counterpartyRepository.GetAllAsync();
@@ -118,7 +118,11 @@ public class AnalyticsService(
             .OrderBy(c => c.FullName)
             .ToList();
 
-        return mapper.Map<List<CounterpartyDto>>(clients);
+        return new ClientsWithMinPriceDto
+        {
+            MinPrice = minPrice,
+            Counterparties = mapper.Map<List<CounterpartyDto>>(clients)
+        };
     }
 
     /// <summary>

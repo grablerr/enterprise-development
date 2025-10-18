@@ -3,7 +3,7 @@
 /// <summary>
 /// Data Transfer Object representing a counterparty.
 /// </summary>
-public class CounterpartyDto
+public class RequestCountDto
 {
     /// <summary>
     /// Unique identifier for the counterparty
@@ -24,4 +24,9 @@ public class CounterpartyDto
     /// Phone number of the counterparty.
     /// </summary>
     public required string PhoneNumber { get; set; }
+
+    /// <summary>
+    /// Optional count of requests associated with the counterparty.
+    /// </summary>
+    public int? RequestCount { get; set; }
 }
