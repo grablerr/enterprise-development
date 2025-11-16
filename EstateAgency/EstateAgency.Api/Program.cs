@@ -1,5 +1,5 @@
 using EstateAgency.Application.AnalyticService;
-using EstateAgency.Application.Mapper;
+using EstateAgency.Contracts.Mapper;
 using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
 using EstateAgency.Infrastructure.Persistence;
