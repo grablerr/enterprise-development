@@ -1,33 +1,36 @@
-﻿namespace EstateAgency.Application.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EstateAgency.Contracts.Dtos;
 
 /// <summary>
 /// Data Transfer Object representing a real estate entity with detailed attributes.
 /// </summary>
-public class RealEstateDto
+public class RealEstateCreateDto
 {
-    /// <summary>
-    /// Unique identifier for the real estate
-    /// </summary>
-    public int Id { get; set; }
-
     /// <summary>
     /// Type of the real estate (e.g., apartment, house).
     /// </summary>
+    [Required(ErrorMessage = "Type is required")]
     public required string Type { get; set; }
 
     /// <summary>
     /// Purpose of the real estate (e.g., residential, commercial).
     /// </summary>
+    [Required(ErrorMessage = "Purpose is required")]
     public required string Purpose { get; set; }
 
     /// <summary>
     /// Official cadastral number for identification.
     /// </summary>
+    [Required(ErrorMessage = "CadastralNumber is required")]
+    [StringLength(64, ErrorMessage = "CadastralNumber cannot be longer than 64 characters")]
     public required string CadastralNumber { get; set; }
 
     /// <summary>
     /// Physical address of the real estate.
     /// </summary>
+    [Required(ErrorMessage = "Address is required")]
+    [StringLength(256, ErrorMessage = "Address cannot be longer than 256 characters")]
     public required string Address { get; set; }
 
     /// <summary>
@@ -43,7 +46,8 @@ public class RealEstateDto
     /// <summary>
     /// Total area in square meters.
     /// </summary>
-    public required float Square { get; set; }
+    [Required(ErrorMessage = "Square is required")]
+    public float Square { get; set; }
 
     /// <summary>
     /// Number of rooms, if applicable.
@@ -58,5 +62,5 @@ public class RealEstateDto
     /// <summary>
     /// Indicates if there are any legal encumbrances affecting the property.
     /// </summary>
-    public required bool IsEncumbrance { get; set; }
+    public bool IsEncumbrance { get; set; }
 }

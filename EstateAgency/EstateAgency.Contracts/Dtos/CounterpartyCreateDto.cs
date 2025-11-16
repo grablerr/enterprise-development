@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EstateAgency.Application.Dtos;
+namespace EstateAgency.Contracts.Dtos;
 /// <summary>
 /// For creating a counterparty.
 /// </summary>

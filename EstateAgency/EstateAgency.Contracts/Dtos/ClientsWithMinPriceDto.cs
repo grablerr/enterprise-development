@@ -1,4 +1,4 @@
-﻿namespace EstateAgency.Application.Dtos;
+﻿namespace EstateAgency.Contracts.Dtos;
 /// <summary>
 /// Data Transfer Object used for returning counterparties along with their minimum price requests.
 /// Contains the minimum price value and a list of counterparties with such requests.

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EstateAgency.Application.Dtos;
+using EstateAgency.Contracts.Dtos;
 using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Enums;
 using EstateAgency.Domain.Interfaces;

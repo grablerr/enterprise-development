@@ -1,9 +1,9 @@
-﻿namespace EstateAgency.Application.Dtos;
+﻿namespace EstateAgency.Contracts.Dtos;
 
 /// <summary>
 /// Data Transfer Object representing a counterparty.
 /// </summary>
-public class RequestCountDto
+public class CounterpartyDto
 {
     /// <summary>
     /// Unique identifier for the counterparty
@@ -24,9 +24,4 @@ public class RequestCountDto
     /// Phone number of the counterparty.
     /// </summary>
     public required string PhoneNumber { get; set; }
-
-    /// <summary>
-    /// Optional count of requests associated with the counterparty.
-    /// </summary>
-    public int? RequestCount { get; set; }
 }

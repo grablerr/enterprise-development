@@ -1,8 +1,8 @@
-﻿using EstateAgency.Application.Dtos;
+﻿using EstateAgency.Contracts.Dtos;
 using AutoMapper;
 using EstateAgency.Domain.Entities;
 
-namespace EstateAgency.Application.Mapper;
+namespace EstateAgency.Contracts.Mapper;
 
 /// <summary>
 /// AutoMapper profile for mapping between domain entities and their DTOs.

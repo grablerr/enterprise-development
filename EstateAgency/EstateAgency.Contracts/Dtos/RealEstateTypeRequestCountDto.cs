@@ -1,4 +1,4 @@
-﻿namespace EstateAgency.Application.Dtos;
+﻿namespace EstateAgency.Contracts.Dtos;
 
 /// <summary>
 /// Data transfer object representing the count of requests by real estate typeю

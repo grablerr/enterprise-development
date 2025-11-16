@@ -8,10 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper" Version="15.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EstateAgency.Contracts\EstateAgency.Contracts.csproj" />
     <ProjectReference Include="..\EstateAgency.Domain\EstateAgency.Domain.csproj" />
   </ItemGroup>
 

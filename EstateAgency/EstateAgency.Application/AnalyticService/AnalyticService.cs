@@ -1,4 +1,4 @@
-﻿using EstateAgency.Application.Dtos;
+﻿using EstateAgency.Contracts.Dtos;
 using AutoMapper;
 using EstateAgency.Domain.Enums;
 using EstateAgency.Domain.Interfaces;

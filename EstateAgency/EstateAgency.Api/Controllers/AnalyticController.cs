@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using EstateAgency.Application.AnalyticService;
 using EstateAgency.Domain.Enums;
-using EstateAgency.Application.Dtos;
+using EstateAgency.Contracts.Dtos;
 
 namespace EstateAgency.Api.Controllers;
 
