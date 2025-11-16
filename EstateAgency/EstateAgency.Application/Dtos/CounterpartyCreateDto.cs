@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace EstateAgency.Application.Dtos;
-
+/// <summary>
+/// For creating a counterparty.
+/// </summary>
 public class CounterpartyCreateDto
 {
     /// <summary>

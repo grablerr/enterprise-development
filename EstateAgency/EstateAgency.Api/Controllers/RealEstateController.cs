@@ -4,7 +4,6 @@ using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Enums;
 using EstateAgency.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace EstateAgency.Api.Controllers;
 
@@ -77,14 +76,12 @@ public class RealEstateController(
             var validTypes = string.Join(", ", Enum.GetNames(typeof(RealEstateType)));
             return BadRequest($"Invalid RealEstateType: {toCreateDto.Type}. Valid values are: {validTypes}");
         }
-        ;
 
         if (!Enum.TryParse<RealEstatePurpose>(toCreateDto.Purpose, true, out var purposeEnum))
         {
             var validPurposes = string.Join(", ", Enum.GetNames(typeof(RealEstatePurpose)));
             return BadRequest($"Invalid RealEstatePurpose: {toCreateDto.Purpose}. Valid values are: {validPurposes}");
         }
-        ;
 
         var realEstate = mapper.Map<RealEstate>(toCreateDto);
         realEstate.Type = typeEnum;
@@ -115,14 +112,13 @@ public class RealEstateController(
         {
             var validTypes = string.Join(", ", Enum.GetNames(typeof(RealEstateType)));
             return BadRequest($"Invalid RealEstateType: {updDto.Type}. Valid values are: {validTypes}");
-        };
+        }
 
         if (!Enum.TryParse<RealEstatePurpose>(updDto.Purpose, true, out var purposeEnum))
         {
             var validPurposes = string.Join(", ", Enum.GetNames(typeof(RealEstatePurpose)));
             return BadRequest($"Invalid RealEstatePurpose: {updDto.Purpose}. Valid values are: {validPurposes}");
-        };
-
+        }
 
         mapper.Map(updDto, old);
         old.Type = typeEnum;

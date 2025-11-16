@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace EstateAgency.Application.Dtos;
-
+/// <summary>
+/// For creating a real estate transaction application.
+/// </summary>
 public class ApplicationCreateDto
 {
     /// <summary>

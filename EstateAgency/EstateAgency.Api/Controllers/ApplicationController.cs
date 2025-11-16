@@ -28,9 +28,6 @@ public class ApplicationController(
         var applications = await applicationRepository.GetAllAsync();
         var dtoList = mapper.Map<IEnumerable<ApplicationDto>>(applications);
 
-        if (dtoList == null || !dtoList.Any())
-            return NotFound("No applications found.");
-
         return Ok(dtoList);
     }
 
