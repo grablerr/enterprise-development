@@ -1,9 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-EstateAgency.RabbitMqProducer-7e10aa7e-bdfe-4f4b-9c07-3440ddd8904e</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.RabbitMQ.Client" Version="13.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EstateAgency.DataGenerator\EstateAgency.DataGenerator.csproj" />
+    <ProjectReference Include="..\EstateAgency.ServiceDefaults\EstateAgency.ServiceDefaults.csproj" />
+  </ItemGroup>
 </Project>

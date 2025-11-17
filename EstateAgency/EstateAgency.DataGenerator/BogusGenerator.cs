@@ -39,8 +39,8 @@ public class BogusGenerator
         };
 
         _applicationsFaker = new Faker<ApplicationCreateDto>()
-            .RuleFor(x => x.CounterpartyId, f => f.Random.Int(1, 100))
-            .RuleFor(x => x.RealEstateId, f => f.Random.Int(1, 1000))
+            .RuleFor(x => x.CounterpartyId, f => f.Random.Int(1, 5))
+            .RuleFor(x => x.RealEstateId, f => f.Random.Int(1, 10))
             .RuleFor(x => x.TransactionAmount, f => Math.Round(f.Finance.Amount(10000, 10000000), 2))
             .RuleFor(x => x.Type, f => f.PickRandom(new[] { "Buy", "Sell" }))
             .RuleFor(x => x.Date, f => f.Date.Past(2));
@@ -63,17 +63,15 @@ public class BogusGenerator
             .RuleFor(x => x.IsEncumbrance, f => f.Random.Bool(0.1f));
     }
 
-    public RealEstateCreateDto GenerateBook()
+    public RealEstateCreateDto GenerateRealEstate()
     {
         _realEstatesCount++;
         return _realEstatesFaker.Generate();
     }
-
-    public CounterpartyCreateDto GenerateCustomer()
+    public CounterpartyCreateDto GenerateCounterparty()
     {
         _counterpartiesCount++;
         return _counterpartiesFaker.Generate();
     }
-
-    public ApplicationCreateDto GenerateRecord() => _applicationsFaker.Generate();
+    public ApplicationCreateDto GenerateApplication() => _applicationsFaker.Generate();
 }

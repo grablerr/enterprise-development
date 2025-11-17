@@ -1,9 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-EstateAgency.RabbitMqConsumer-80d8f890-e689-48d8-909b-6da88a11dc16</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.RabbitMQ.Client" Version="13.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EstateAgency.Contracts\EstateAgency.Contracts.csproj" />
+    <ProjectReference Include="..\EstateAgency.Infrastructure\EstateAgency.Infrastructure.csproj" />
+    <ProjectReference Include="..\EstateAgency.ServiceDefaults\EstateAgency.ServiceDefaults.csproj" />
+  </ItemGroup>
 </Project>
