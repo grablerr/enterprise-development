@@ -2,7 +2,6 @@ using AutoMapper;
 using EstateAgency.Contracts.Dtos;
 using EstateAgency.Domain.Entities;
 using EstateAgency.Domain.Interfaces;
-using EstateAgency.Infrastructure.Repositories;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -10,15 +9,36 @@ using System.Text.Json;
 
 namespace EstateAgency.RabbitMqConsumer;
 
+/// <summary>
+/// RabbitMQ consumer service that receives and processes real estate agency data contracts.
+/// </summary>
+/// <param name="connectionFactory">Factory for creating RabbitMQ connections.</param>
+/// <param name="logger">Logger instance for capturing connection, message handling, and error events.</param>
+/// <param name="mapper">AutoMapper instance for mapping DTOs to domain entities.</param>
+/// <param name="scopeFactory">Service scope factory to resolve repositories for data persistence.</param>
 public class RabbitMqConsumer(
     IConnectionFactory connectionFactory,
     ILogger<RabbitMqConsumer> logger,
     IMapper mapper,
     IServiceScopeFactory scopeFactory) : BackgroundService
 {
+    /// <summary>
+    /// Name of the RabbitMQ exchange to bind to.
+    /// </summary>
     private const string ExchangeName = "data-exchange";
+
+    /// <summary>
+    /// Name of the RabbitMQ queue from which messages are consumed.
+    /// </summary>
     private const string QueueName = "data-queue";
 
+    /// <summary>
+    /// Attempts to establish a RabbitMQ connection with retry logic on failure.
+    /// </summary>
+    /// <param name="stoppingToken">Token to signal cancellation of retries.</param>
+    /// <param name="maxRetries">Maximum number of retry attempts before throwing an exception.</param>
+    /// <param name="delayMs">Delay in milliseconds between retry attempts.</param>
+    /// <returns>Established RabbitMQ connection.</returns>
     private async Task<IConnection> ConnectWithRetryAsync(
         CancellationToken stoppingToken,
         int maxRetries = 5,
@@ -48,6 +68,11 @@ public class RabbitMqConsumer(
         throw new OperationCanceledException("Connection attempts cancelled");
     }
 
+    /// <summary>
+    /// Runs the consumer service asynchronously, declaring exchange and queue, binding routing keys,
+    /// and processing incoming messages until <paramref name="stoppingToken"/> signals cancellation.
+    /// </summary>
+    /// <param name="stoppingToken">Token to cancel the service execution.</param>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
@@ -118,6 +143,11 @@ public class RabbitMqConsumer(
         }
     }
 
+    /// <summary>
+    /// Routes received messages to appropriate handlers based on routing key.
+    /// </summary>
+    /// <param name="routingKey">Routing key of the received message.</param>
+    /// <param name="json">Message payload in JSON format.</param>
     private async Task ProcessMessageAsync(string routingKey, string json)
     {
         try
@@ -149,7 +179,6 @@ public class RabbitMqConsumer(
             throw;
         }
     }
-
 
     private async Task ProcessCounterpartyMessageAsync(string json, IRepository<Counterparty> repo)
     {

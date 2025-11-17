@@ -1,25 +1,49 @@
 using EstateAgency.DataGenerator;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 
 namespace EstateAgency.RabbitMqProducer;
 
+/// <summary>
+/// RabbitMQ producer service that generates and publishes real estate agency data contracts.
+/// </summary>
+/// <param name="connectionFactory">Factory for creating RabbitMQ connections.</param>
+/// <param name="logger">Logger instance for recording publishing events and errors.</param>
+/// <param name="configuration">Configuration provider to access settings like publish delay.</param>
 public class RabbitMqProducer(
-    IConnectionFactory connectionFactory,
-    ILogger<RabbitMqProducer> logger,
-    IConfiguration configuration) : BackgroundService
+IConnectionFactory connectionFactory,
+ILogger<RabbitMqProducer> logger,
+IConfiguration configuration) : BackgroundService
 {
+    /// <summary>
+    /// Initial count for generating bogus real estate records.
+    /// </summary>
     private const int RealEstatesCount = 1;
 
+
+    /// <summary>
+    /// Initial count for generating bogus counterparty records.
+    /// </summary>
     private const int CounterpartiesCount = 1;
 
+    /// <summary>
+    /// Data generator producing real estate, counterparty, and application contracts.
+    /// </summary>
     private readonly BogusGenerator _generator = new(RealEstatesCount, CounterpartiesCount);
 
+    /// <summary>
+    /// Name of the RabbitMQ exchange to publish messages to.
+    /// </summary>
     private const string ExchangeName = "data-exchange";
 
+    /// <summary>
+    /// Attempts to establish a RabbitMQ connection with retry logic on failure.
+    /// </summary>
+    /// <param name="stoppingToken">Token to signal cancellation of retries.</param>
+    /// <param name="maxRetries">Maximum retry attempts before throwing an exception.</param>
+    /// <param name="delayMs">Delay in milliseconds between retry attempts.</param>
+    /// <returns>Established RabbitMQ connection.</returns>
     private async Task<IConnection> ConnectWithRetryAsync(
         CancellationToken stoppingToken,
         int maxRetries = 5,
@@ -49,6 +73,11 @@ public class RabbitMqProducer(
         throw new OperationCanceledException("Connection attempts cancelled.");
     }
 
+    /// <summary>
+    /// Runs the producer service asynchronously, generating and publishing messages to RabbitMQ
+    /// until the <paramref name="stoppingToken"/> signals cancellation.
+    /// </summary>
+    /// <param name="stoppingToken">Token to cancel the background service execution.</param>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
