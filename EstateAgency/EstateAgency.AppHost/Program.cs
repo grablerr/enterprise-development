@@ -23,6 +23,8 @@ builder.AddProject<Projects.EstateAgency_RabbitMqConsumer>("RabbitMqConsumer")
 builder.AddProject<Projects.EstateAgency_RabbitMqProducer>("RabbitMqProducer")
     .WithReference(rabbitMq)
     .WaitFor(rabbitMq)
-    .WithEnvironment("RABBITMQ_PUBLISH_DELAY_MS", "100");
+    .WaitFor(api)
+    .WaitFor(mySqlDb)
+    .WithEnvironment("RabbitMQPublishDelayMs", "100");
 
 builder.Build().Run();

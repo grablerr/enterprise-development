@@ -94,7 +94,7 @@ public class RabbitMqConsumer(
                 autoDelete: false,
                 cancellationToken: stoppingToken);
 
-            var routingKeys = new[] { "counterparty.create", "realestate.create", "application.create" };
+            var routingKeys = new[] { "counterparty.create", "realestate.create", "application.create", "stats.summary" };
             foreach (var routingKey in routingKeys)
             {
                 await channel.QueueBindAsync(QueueName, ExchangeName, routingKey, cancellationToken: stoppingToken);
@@ -112,7 +112,27 @@ public class RabbitMqConsumer(
                     var routingKey = ea.RoutingKey;
 
                     logger.LogInformation("Received message. RoutingKey: {RoutingKey}, Payload: {Json}", routingKey, json);
-                    await ProcessMessageAsync(routingKey, json);
+
+                    if (routingKey == "stats.summary")
+                    {
+                        var stats = JsonSerializer.Deserialize<StatsSummaryDto>(json);
+                        if (stats != null)
+                        {
+                            logger.LogInformation("Stats Summary Received at {Time}: Counterparty={Counterparty}, RealEstate={RealEstate}, Application={Application}",
+                                stats.Timestamp,
+                                stats.CounterpartyMessagesSent,
+                                stats.RealEstateMessagesSent,
+                                stats.ApplicationMessagesSent);
+                        }
+                        else
+                        {
+                            logger.LogWarning("Invalid stats.summary JSON: {Json}", json);
+                        }
+                    }
+                    else
+                    {
+                        await ProcessMessageAsync(routingKey, json);
+                    }
 
                     await channel.BasicAckAsync(
                         ea.DeliveryTag,

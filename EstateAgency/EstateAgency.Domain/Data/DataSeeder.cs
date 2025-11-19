@@ -4,7 +4,9 @@ using EstateAgency.Domain.Enums;
 namespace EstateAgency.Domain.Data;
 
 /// <summary>
-/// Provides comprehensive test data fixture for Estate Agency domain entities.
+/// Provides comprehensive test data 
+/// 
+/// for Estate Agency domain entities.
 /// Contains pre-populated collections of real estate objects, counterparties, and applications
 /// for use in unit testing and development scenarios.
 /// </summary>
@@ -196,6 +198,41 @@ public class DataSeeder
             FullName = "Dmitry Volkov",
             PassportNumber = "4504 901234",
             PhoneNumber = "+7 999 555-66-77"
+        },
+        new Counterparty
+        {
+            Id = 6,
+            FullName = "Anna Smirnova",
+            PassportNumber = "4505 112233",
+            PhoneNumber = "+7 999 666-77-88"
+        },
+        new Counterparty
+        {
+            Id = 7,
+            FullName = "Pavel Novikov",
+            PassportNumber = "4506 445566",
+            PhoneNumber = "+7 999 777-88-99"
+        },
+        new Counterparty
+        {
+            Id = 8,
+            FullName = "Olga Kuznetsova",
+            PassportNumber = "4507 778899",
+            PhoneNumber = "+7 999 888-99-00"
+        },
+        new Counterparty
+        {
+            Id = 9,
+            FullName = "Mikhail Lebedev",
+            PassportNumber = "4508 556677",
+            PhoneNumber = "+7 999 999-00-11"
+        },
+        new Counterparty
+        {
+            Id = 10,
+            FullName = "Elena Morozova",
+            PassportNumber = "4509 334455",
+            PhoneNumber = "+7 999 000-11-22"
         }
     ];
     /// <summary>
@@ -295,5 +332,4 @@ public class DataSeeder
             Date = new DateTime(2024, 6, 25)
         }
     ];
-
 }

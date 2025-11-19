@@ -9,11 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.RabbitMQ.Client" Version="13.0.0" />
+    <PackageReference Include="Bogus" Version="35.6.5" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EstateAgency.DataGenerator\EstateAgency.DataGenerator.csproj" />
+    <ProjectReference Include="..\EstateAgency.Contracts\EstateAgency.Contracts.csproj" />
     <ProjectReference Include="..\EstateAgency.ServiceDefaults\EstateAgency.ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>

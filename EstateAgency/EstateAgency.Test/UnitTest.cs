@@ -8,7 +8,7 @@ namespace EstateAgency.Test;
 /// Tests cover sales analytics, client ranking, property statistics, and financial analysis.
 /// Uses FixtureDataClass as a shared test data fixture for consistent data across all tests.
 /// </summary>
-public class QueriesTests(DataSeeder testData) : IClassFixture<DataSeeder>
+public class UnitTest(DataSeeder testData) : IClassFixture<DataSeeder>
 {
 
     /// <summary>

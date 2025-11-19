@@ -1,4 +1,3 @@
-using EstateAgency.DataGenerator;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
@@ -21,7 +20,6 @@ IConfiguration configuration) : BackgroundService
     /// </summary>
     private const int RealEstatesCount = 1;
 
-
     /// <summary>
     /// Initial count for generating bogus counterparty records.
     /// </summary>
@@ -36,6 +34,13 @@ IConfiguration configuration) : BackgroundService
     /// Name of the RabbitMQ exchange to publish messages to.
     /// </summary>
     private const string ExchangeName = "data-exchange";
+
+
+    private int _counterpartyCount = 0;
+    private int _realestateCount = 0;
+    private int _applicationCount = 0;
+
+    private DateTime _lastStatsSent = DateTime.UtcNow;
 
     /// <summary>
     /// Attempts to establish a RabbitMQ connection with retry logic on failure.
@@ -61,7 +66,7 @@ IConfiguration configuration) : BackgroundService
             }
             catch (Exception ex)
             {
-                logger.LogWarning(ex, "Failed to connect to RabbitMQ on attempt {Attempt}", attempt);
+                logger.LogWarning(ex, "Failed to connect to RabbitMQ on attempt {Attempt}: {Message}", attempt, ex.Message);
                 if (attempt >= maxRetries)
                 {
                     logger.LogError("Max retry attempts reached ({MaxRetries}). Throwing.", maxRetries);
@@ -85,7 +90,7 @@ IConfiguration configuration) : BackgroundService
             await using var connection = await ConnectWithRetryAsync(stoppingToken);
             await using var channel = await connection.CreateChannelAsync(cancellationToken: stoppingToken);
 
-            var delayMs = configuration.GetValue<int>("RABBITMQ_PUBLISH_DELAY_MS", 100);
+            var delayMs = configuration.GetValue<int>("RabbitMQPublishDelayMs", 100);
 
             await channel.ExchangeDeclareAsync(
                 exchange: ExchangeName,
@@ -109,14 +114,17 @@ IConfiguration configuration) : BackgroundService
                         case 0:
                             routingKey = "counterparty.create";
                             payload = _generator.GenerateCounterparty();
+                            _counterpartyCount++;
                             break;
                         case 1:
                             routingKey = "realestate.create";
                             payload = _generator.GenerateRealEstate();
+                            _realestateCount++;
                             break;
                         case 2:
                             routingKey = "application.create";
                             payload = _generator.GenerateApplication();
+                            _applicationCount++;
                             break;
                         default:
                             routingKey = "data";
@@ -137,6 +145,35 @@ IConfiguration configuration) : BackgroundService
 
                     logger.LogInformation("Sent message. RoutingKey: {RoutingKey}, Type: {Type}",
                         routingKey, payload.GetType().Name);
+
+                    if ((DateTime.UtcNow - _lastStatsSent).TotalSeconds >= 10)
+                    {
+                        var stats = new
+                        {
+                            Timestamp = DateTime.UtcNow,
+                            CounterpartyMessagesSent = _counterpartyCount,
+                            RealEstateMessagesSent = _realestateCount,
+                            ApplicationMessagesSent = _applicationCount
+                        };
+
+                        var statsJson = JsonSerializer.Serialize(stats);
+                        var statsBody = Encoding.UTF8.GetBytes(statsJson);
+
+                        await channel.BasicPublishAsync(
+                            exchange: ExchangeName,
+                            routingKey: "stats.summary",
+                            mandatory: false,
+                            basicProperties: new BasicProperties { Persistent = true },
+                            body: statsBody,
+                            cancellationToken: stoppingToken);
+
+                        logger.LogInformation("Sent stats summary message: {StatsJson}", statsJson);
+
+                        _counterpartyCount = 0;
+                        _realestateCount = 0;
+                        _applicationCount = 0;
+                        _lastStatsSent = DateTime.UtcNow;
+                    }
 
                     await Task.Delay(delayMs, stoppingToken);
                 }
