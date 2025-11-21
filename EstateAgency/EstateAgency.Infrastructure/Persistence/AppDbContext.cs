@@ -1,6 +1,5 @@
 ﻿using EstateAgency.Domain.Data;
 using EstateAgency.Domain.Entities;
-using EstateAgency.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace EstateAgency.Infrastructure.Persistence;
