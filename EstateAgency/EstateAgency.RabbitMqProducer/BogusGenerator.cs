@@ -74,11 +74,7 @@ public class BogusGenerator
 
         _counterpartiesFaker = new Faker<CounterpartyCreateDto>()
             .RuleFor(x => x.FullName, f => f.Name.FullName())
-            .RuleFor(x => x.PassportNumber, f =>
-            {
-                var raw = f.Random.Replace("##########").Substring(0, 10);
-                return raw.Insert(4, " ");
-            })
+            .RuleFor(x => x.PassportNumber, f => f.Random.Replace("#### ######")[..11])
             .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber("+7##########"));
 
         _realEstatesFaker = new Faker<RealEstateCreateDto>()
@@ -86,14 +82,9 @@ public class BogusGenerator
             .RuleFor(x => x.Purpose, f => f.PickRandom(purposes))
             .RuleFor(x => x.CadastralNumber, f =>
             {
-                var part1 = f.Random.Replace("##");
-                var part2 = f.Random.Replace("##");
-                var part3 = f.Random.Replace("##");
+                var last = f.Random.String2(f.Random.Int(1, 7), "0123456789");
 
-                var lastSectionLength = f.Random.Int(2, 7);
-                var part4 = f.Random.Replace(new string('#', lastSectionLength));
-
-                return $"{part1}:{part2}:{part3}:{part4}";
+                return f.Random.Replace($"##:##:######:{last}");
             })
             .RuleFor(x => x.Address, f => f.Address.FullAddress())
             .RuleFor(x => x.FloorNumber, f => f.Random.Int(1, 25).OrNull(f, 0.3f))
